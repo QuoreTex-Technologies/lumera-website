@@ -698,12 +698,11 @@ section {
 
 .detection-icon svg { display: block; }
 
-/* Wavy underline on hero "human" */
-.underwave {
+/* Wavy underline directly on h1 em — no wrapper span needed */
+h1 em {
   position: relative;
-  display: inline;
 }
-.underwave::after {
+h1 em::after {
   content: '';
   position: absolute;
   left: 0; right: 0;
@@ -712,6 +711,7 @@ section {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='10' viewBox='0 0 120 10'%3E%3Cpath d='M0 6 C8 2,16 9,28 5 C38 2,46 8,60 5 C72 2,82 8,92 5 C104 2,112 8,120 5' stroke='%230d97ad' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: auto 100%;
+  pointer-events: none;
 }
 
 /* Hand-drawn section accent marks */
@@ -1455,7 +1455,7 @@ footer {
       Now in private beta — launching June 2026
     </div>
     <h1 class="fade-up">
-      Hire the <em><span class="underwave">human</span></em>,<br />not the AI.
+      Hire the <em>human</em>,<br />not the AI.
     </h1>
     <p class="hero-sub fade-up">
       Lumera detects AI-assisted cheating, remote desktop takeovers, Bluetooth coaching, and behavioral fraud in real-time during remote interviews — so you can trust every hire.
