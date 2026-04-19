@@ -685,18 +685,62 @@ section {
 }
 
 .detection-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   background: var(--card-bg, var(--accent-soft));
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  font-family: var(--font-mono);
-  font-size: 18px;
   color: var(--card-accent, var(--accent));
 }
+
+.detection-icon svg { display: block; }
+
+/* Wavy underline on hero "human" */
+.underwave {
+  position: relative;
+  display: inline;
+}
+.underwave::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -10px;
+  height: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='10' viewBox='0 0 120 10'%3E%3Cpath d='M0 6 C8 2,16 9,28 5 C38 2,46 8,60 5 C72 2,82 8,92 5 C104 2,112 8,120 5' stroke='%230d97ad' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+/* Hand-drawn section accent marks */
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  background: var(--brand-gradient);
+  border-radius: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+
+/* Custom flow step icon */
+.flow-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(13,151,173,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: var(--accent);
+}
+.flow-icon svg { display: block; }
 
 .detection-card h3 {
   font-size: 17px;
@@ -1411,7 +1455,7 @@ footer {
       Now in private beta — launching June 2026
     </div>
     <h1 class="fade-up">
-      Hire the <em>human</em>,<br />not the AI.
+      Hire the <em><span class="underwave">human</span></em>,<br />not the AI.
     </h1>
     <p class="hero-sub fade-up">
       Lumera detects AI-assisted cheating, remote desktop takeovers, Bluetooth coaching, and behavioral fraud in real-time during remote interviews — so you can trust every hire.
@@ -1539,7 +1583,17 @@ footer {
 
     <div class="detection-grid">
       <div class="detection-card" style="--card-accent: #06b6d4; --card-bg: rgba(6, 182, 212, 0.12);">
-        <div class="detection-icon">AI</div>
+        <div class="detection-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="15" height="10" rx="1.8"/>
+            <circle cx="7.5" cy="7.5" r="1.1"/>
+            <circle cx="11.5" cy="7.5" r="1.1"/>
+            <path d="M7.5 10s.8 1 2 1 2-1 2-1"/>
+            <path d="M9.5 13v2M6.5 15h6"/>
+            <path d="M20.5 2.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" stroke-width="1.3"/>
+            <path d="M19.5 10l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" stroke-width="1.1"/>
+          </svg>
+        </div>
         <h3>AI tools running</h3>
         <p>Detects Cluely, Interview Coder, ChatGPT desktop, Parakeet AI, and other stealth overlay tools candidates use to feed AI answers.</p>
         <div class="detection-tags">
@@ -1550,7 +1604,16 @@ footer {
       </div>
 
       <div class="detection-card" style="--card-accent: #10b981; --card-bg: rgba(16, 185, 129, 0.12);">
-        <div class="detection-icon">RD</div>
+        <div class="detection-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="13" height="9" rx="1.8"/>
+            <path d="M8 16v2M5 18h6"/>
+            <path d="M17 9.5l4 2.5-4 2.5"/>
+            <path d="M21 12H15"/>
+            <path d="M15 9v6"/>
+            <circle cx="21" cy="12" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
         <h3>Remote desktop takeover</h3>
         <p>Catches AnyDesk, TeamViewer, RDP, Chrome Remote Desktop — when someone else is controlling the candidate's machine from another location.</p>
         <div class="detection-tags">
@@ -1561,7 +1624,15 @@ footer {
       </div>
 
       <div class="detection-card" style="--card-accent: #f59e0b; --card-bg: rgba(245, 158, 11, 0.12);">
-        <div class="detection-icon">BT</div>
+        <div class="detection-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6.5 7.5 17.5 15.5 12 21 12 3 17.5 8.5 6.5 16.5"/>
+            <path d="M4 8.5c2.5-2.5 6-3 8.5-1.2" stroke-width="1.2" opacity="0.55"/>
+            <path d="M4 15.5c2.5 2.5 6 3 8.5 1.2" stroke-width="1.2" opacity="0.55"/>
+            <path d="M2 6.5c3.5-3.8 9-4.5 12.5-1.5" stroke-width="1" opacity="0.3"/>
+            <path d="M2 17.5c3.5 3.8 9 4.5 12.5 1.5" stroke-width="1" opacity="0.3"/>
+          </svg>
+        </div>
         <h3>Bluetooth coaching devices</h3>
         <p>Identifies earpieces, AirPods, smart glasses, and hidden coaching devices paired to the candidate's system during the interview.</p>
         <div class="detection-tags">
@@ -1572,7 +1643,15 @@ footer {
       </div>
 
       <div class="detection-card" style="--card-accent: #ef4444; --card-bg: rgba(239, 68, 68, 0.12);">
-        <div class="detection-icon">BX</div>
+        <div class="detection-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+            <circle cx="12" cy="12" r="3"/>
+            <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+            <path d="M12 3.5V5.5M12 18.5v2M3.5 12H5.5M18.5 12h2" stroke-width="1.2" opacity="0.5"/>
+            <path d="M6.1 6.1l1.3 1.3M16.6 16.6l1.3 1.3M6.1 17.9l1.3-1.3M16.6 7.4l1.3-1.3" stroke-width="1.1" opacity="0.45"/>
+          </svg>
+        </div>
         <h3>Behavioral anomalies</h3>
         <p>ML-powered gaze tracking, tab-switching patterns, typing cadence analysis, and external voice detection for impersonation fraud.</p>
         <div class="detection-tags">
@@ -1583,7 +1662,19 @@ footer {
       </div>
 
       <div class="detection-card" style="--card-accent: #3b82f6; --card-bg: rgba(59, 130, 246, 0.12);">
-        <div class="detection-icon">VM</div>
+        <div class="detection-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="16" height="12" rx="2"/>
+            <path d="M1 8h16"/>
+            <circle cx="3.5" cy="6" r="0.8" fill="currentColor" stroke="none"/>
+            <circle cx="6" cy="6" r="0.8" fill="currentColor" stroke="none"/>
+            <rect x="7" y="9.5" width="13" height="9" rx="1.8" fill="var(--bg-card)"/>
+            <rect x="7" y="9.5" width="13" height="9" rx="1.8"/>
+            <path d="M7 12.5h13"/>
+            <circle cx="9" cy="11" r="0.7" fill="currentColor" stroke="none"/>
+            <circle cx="11" cy="11" r="0.7" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
         <h3>Virtual machines</h3>
         <p>Flags candidates running the interview inside a VM to hide their actual desktop — a common technique Sherlock and others miss.</p>
         <div class="detection-tags">
@@ -1594,7 +1685,16 @@ footer {
       </div>
 
       <div class="detection-card" style="--card-accent: #ec4899; --card-bg: rgba(236, 72, 153, 0.12);">
-        <div class="detection-icon">NW</div>
+        <div class="detection-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 10h-1.3A7 7 0 1 0 8 17v-1"/>
+            <circle cx="5" cy="19" r="2.2"/>
+            <circle cx="12" cy="21" r="2.2"/>
+            <circle cx="19" cy="19" r="2.2"/>
+            <path d="M7 17.8l3.5-2M15 19.8l2.5-2.2"/>
+            <path d="M12 19V13"/>
+          </svg>
+        </div>
         <h3>AI API call monitoring</h3>
         <p>Detects background network traffic to OpenAI, Anthropic, Gemini, and other AI services during the interview — even if no app is visible.</p>
         <div class="detection-tags">
@@ -1620,6 +1720,13 @@ footer {
       <div class="flow-step">
         <div class="flow-num">01</div>
         <div class="flow-content">
+          <div class="flow-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="13" rx="2"/>
+              <circle cx="12" cy="10" r="2.5"/>
+              <path d="M7.5 18c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/>
+            </svg>
+          </div>
           <h3>Candidate joins interview</h3>
           <p>
             The candidate receives an interview link as usual. Before joining, they install a lightweight 12 MB Lumera agent — no admin rights required. The agent auto-launches with the interview.
@@ -1636,6 +1743,14 @@ footer {
       <div class="flow-step">
         <div class="flow-num">02</div>
         <div class="flow-content">
+          <div class="flow-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="4.5"/>
+              <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+              <path d="M12 3v2M12 19v2M3 12H1M23 12h-2" stroke-width="1.3" opacity="0.5"/>
+            </svg>
+          </div>
           <h3>Lumera monitors silently</h3>
           <p>
             The agent runs six detection layers in parallel — scanning processes, network traffic, Bluetooth devices, behavior patterns, and display configuration. All processing is real-time and privacy-first.
@@ -1652,6 +1767,13 @@ footer {
       <div class="flow-step">
         <div class="flow-num">03</div>
         <div class="flow-content">
+          <div class="flow-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              <circle cx="18" cy="5" r="3.5" fill="#dc2626" stroke="none"/>
+            </svg>
+          </div>
           <h3>Interviewer sees live alerts</h3>
           <p>
             Suspicious activity surfaces instantly on the interviewer's dashboard — with severity ratings, timestamps, and evidence. No need to play detective. Focus on the interview, let Lumera handle the integrity.
@@ -1667,6 +1789,13 @@ footer {
       <div class="flow-step">
         <div class="flow-num">04</div>
         <div class="flow-content">
+          <div class="flow-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <path d="M9 13l2 2 4-4"/>
+            </svg>
+          </div>
           <h3>Get a complete fraud report</h3>
           <p>
             After the interview, receive a comprehensive PDF report with every detected event, timestamps, confidence scores, and recommendations — ready for HR records and hiring decisions.
