@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumera — AI Interview Integrity Platform | Detect Cheating in Real-Time</title>
+<meta name="description" content="Lumera detects AI cheating, remote desktop fraud, and Bluetooth coaching in live interviews. Built for Indian hiring teams. By Quoretex Technologies." />
+<meta name="keywords" content="AI interview proctoring, interview cheating detection, remote hiring fraud, Lumera, Quoretex" />
+
+<link rel="icon" type="image/png" sizes="256x256" href="images/lumera-favicon-256.png" />
+<link rel="apple-touch-icon" href="images/lumera-icon.png" />
+
+<meta property="og:title" content="Lumera — AI Interview Integrity Platform" />
+<meta property="og:description" content="Detect AI cheating, remote desktop fraud, and Bluetooth coaching in live interviews. Built for Indian hiring teams." />
+<meta property="og:image" content="images/lumera-logo-large.png" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Lumera — AI Interview Integrity Platform" />
+<meta name="twitter:description" content="Detect AI cheating, remote desktop fraud, and Bluetooth coaching in live interviews." />
+<meta name="twitter:image" content="images/lumera-logo-large.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #faf7f0;
+  --bg-soft: #f3eee3;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f5f0e4;
+  --border: rgba(10, 10, 15, 0.08);
+  --border-strong: rgba(10, 10, 15, 0.15);
+  --text: #0a0a0f;
+  --text-muted: #4b5563;
+  --text-dim: #6b7280;
+  --accent: #2b8ee8;
+  --accent-end: #10b981;
+  --accent-glow: rgba(43, 142, 232, 0.14);
+  --accent-soft: rgba(43, 142, 232, 0.07);
+  --brand-gradient: linear-gradient(135deg, #1a6fc9 0%, #0d97ad 50%, #059669 100%);
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --shadow-soft: 0 1px 2px rgba(10, 10, 15, 0.04), 0 4px 16px rgba(10, 10, 15, 0.05);
+  --shadow-strong: 0 10px 30px rgba(10, 10, 15, 0.08), 0 30px 80px rgba(10, 10, 15, 0.12);
+  --font-display: 'Instrument Serif', serif;
+  --font-body: 'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ============ NAVIGATION ============ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(250, 247, 240, 0.78);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.logo-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Footer uses full logo PNG */
+.logo-full {
+  height: 48px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.nav-links a {
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.nav-cta:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-cta   { display: none; }
+  .nav-inner { padding: 14px 20px; }
+}
+
+/* ============ HERO ============ */
+.hero {
+  position: relative;
+  padding: 160px 32px 100px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  background: var(--bg-soft);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(48px, 7vw, 88px);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+
+h1 em {
+  font-style: italic;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 20px;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 auto 40px;
+  line-height: 1.5;
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 72px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(10, 10, 15, 0.15);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card);
+  border-color: var(--text-muted);
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.btn:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* Hero demo mockup */
+.hero-demo {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  z-index: 2;
+}
+
+.demo-window {
+  --bg: #0a0a0f;
+  --bg-soft: #11111a;
+  --bg-card: #14141f;
+  --bg-card-hover: #1a1a28;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --text: #f5f5f7;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  background: var(--bg-card);
+  border: 1px solid rgba(10, 10, 15, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(10, 10, 15, 0.18), 0 10px 20px rgba(10, 10, 15, 0.08);
+}
+
+.demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+.demo-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.demo-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.demo-url {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.demo-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--success);
+  font-family: var(--font-mono);
+}
+
+.demo-body {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  min-height: 400px;
+}
+
+@media (max-width: 860px) {
+  .demo-body { grid-template-columns: 1fr; }
+}
+
+.demo-video {
+  background: #000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  min-height: 400px;
+}
+
+.demo-video::before {
+  content: '';
+  position: absolute;
+  inset: 40px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0f 100%);
+  border-radius: 12px;
+}
+
+.candidate-placeholder {
+  position: relative;
+  z-index: 2;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2d2d45, #1a1a28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border-strong);
+}
+
+.candidate-placeholder svg {
+  width: 60px;
+  height: 60px;
+  opacity: 0.4;
+}
+
+.demo-rec {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--danger);
+  z-index: 3;
+}
+
+.demo-rec::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--danger);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.demo-panel {
+  background: var(--bg-card);
+  padding: 24px 20px;
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel-title {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+
+.alert {
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+.alert-warning {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+}
+
+.alert-info {
+  background: rgba(43, 142, 232, 0.08);
+  border: 1px solid rgba(43, 142, 232, 0.25);
+  color: #93c5fd;
+}
+
+.alert-icon {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.alert-body strong {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.alert-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+/* ============ TRUSTED BY ============ */
+.trusted {
+  padding: 80px 32px 40px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.trusted-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 28px;
+}
+
+.trusted-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  opacity: 0.75;
+}
+
+.trusted-item {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--text-muted);
+}
+
+/* ============ SECTIONS ============ */
+section {
+  position: relative;
+  z-index: 2;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.section-pad {
+  padding: 120px 0;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.section-title em {
+  font-style: italic;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-sub {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 640px;
+  line-height: 1.5;
+  margin-bottom: 60px;
+}
+
+/* ============ PROBLEM ============ */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.problem-card {
+  padding: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+
+.problem-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+}
+
+.problem-stat {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-style: italic;
+  line-height: 1;
+  margin-bottom: 16px;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.problem-card h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.problem-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ============ DETECTION GRID ============ */
+.detection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 60px;
+}
+
+.detection-card {
+  padding: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.detection-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-accent, var(--accent));
+  opacity: 0.7;
+}
+
+.detection-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+}
+
+.detection-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--card-bg, var(--accent-soft));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--card-accent, var(--accent));
+}
+
+.detection-card h3 {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.detection-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.detection-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  padding: 3px 8px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+/* ============ HOW IT WORKS ============ */
+.flow-container {
+  margin-top: 80px;
+  position: relative;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 40px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.flow-step:last-child {
+  border-bottom: none;
+}
+
+.flow-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-style: italic;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.4;
+}
+
+.flow-content h3 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.flow-content p {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 20px;
+}
+
+.flow-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.flow-meta span::before {
+  content: '→ ';
+  color: var(--accent);
+}
+
+@media (max-width: 680px) {
+  .flow-step {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .flow-num { font-size: 48px; }
+}
+
+/* ============ WHY LUMERA ============ */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 60px;
+}
+
+.why-card {
+  padding: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: all 0.3s;
+}
+
+.why-card:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.why-card h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.why-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.why-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ============ COMPARISON ============ */
+.compare-table {
+  margin-top: 60px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  font-size: 14px;
+}
+
+.compare-row:last-child {
+  border-bottom: none;
+}
+
+.compare-head {
+  background: var(--bg-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.compare-head .lumera-col {
+  color: var(--accent);
+}
+
+.compare-feature {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.compare-cell {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.compare-cell.yes { color: var(--success); }
+.compare-cell.no { color: var(--text-dim); }
+.compare-cell.partial { color: var(--warning); }
+
+.lumera-col {
+  font-weight: 500;
+}
+
+@media (max-width: 680px) {
+  .compare-row { grid-template-columns: 1.5fr 1fr 1fr 1fr; font-size: 12px; padding: 14px 12px; }
+}
+
+/* ============ FAQ ============ */
+.faq-list {
+  margin-top: 60px;
+  max-width: 800px;
+  border-top: 1px solid var(--border);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0;
+  cursor: pointer;
+}
+
+.faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+  gap: 20px;
+}
+
+.faq-toggle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+.faq-item.open .faq-toggle {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  transform: rotate(45deg);
+}
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.faq-item.open .faq-a {
+  max-height: 500px;
+  padding-top: 16px;
+}
+
+/* ============ CTA SECTION ============ */
+.cta-section {
+  padding: 120px 32px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-box {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.cta-box > * {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-box h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.cta-box h2 em {
+  font-style: italic;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta-box p {
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+
+/* ============ FOOTER ============ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 32px 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 720px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+.footer-brand .logo {
+  margin-bottom: 16px;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover {
+  color: var(--text);
+}
+
+.footer-bottom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-bottom em {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* ============ 3D GRID ============ */
+.hero-grid {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  right: -10%;
+  height: 52%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 100%);
+}
+
+.grid-plane {
+  position: absolute;
+  inset: 0;
+  transform: perspective(500px) rotateX(62deg);
+  transform-origin: center bottom;
+  background-image:
+    linear-gradient(rgba(13,151,173,0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13,151,173,0.18) 1px, transparent 1px);
+  background-size: 72px 72px;
+  animation: grid-scroll 14s linear infinite;
+}
+
+@keyframes grid-scroll {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 72px; }
+}
+
+#heroParticles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============ RADAR CANVAS ============ */
+.demo-video {
+  background: #060609 !important;
+  position: relative !important;
+  padding: 0 !important;
+  min-height: 360px;
+  overflow: hidden;
+}
+
+.demo-video::before { display: none !important; }
+
+#radarCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ============ 3D CARD TILT ============ */
+.detection-card,
+.problem-card,
+.why-card {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.detection-card:hover,
+.problem-card:hover,
+.why-card:hover {
+  transform: none; /* JS overrides */
+}
+
+/* ============ ANIMATIONS ============ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up:nth-child(1) { animation-delay: 0.1s; }
+.fade-up:nth-child(2) { animation-delay: 0.2s; }
+.fade-up:nth-child(3) { animation-delay: 0.3s; }
+.fade-up:nth-child(4) { animation-delay: 0.4s; }
+
+/* ============ FLOATING ALERT PILLS ============ */
+.hero-floats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.float-pill {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(10,10,15,0.09);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text);
+  box-shadow: 0 6px 24px rgba(10,10,15,0.08), 0 1px 4px rgba(10,10,15,0.04);
+  white-space: nowrap;
+}
+
+.pill-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+.pill-dot.red   { background: #dc2626; box-shadow: 0 0 7px #dc2626; }
+.pill-dot.amber { background: #f59e0b; box-shadow: 0 0 7px #f59e0b; }
+.pill-dot.blue  { background: #2b8ee8; box-shadow: 0 0 7px #2b8ee8; }
+.pill-dot.green { background: #059669; box-shadow: 0 0 7px #059669; }
+
+.pill-severity {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 100px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.pill-severity.critical { background: rgba(220,38,38,0.1); color: #dc2626; }
+.pill-severity.high     { background: rgba(245,158,11,0.1); color: #d97706; }
+.pill-severity.medium   { background: rgba(43,142,232,0.1); color: #1a6fc9; }
+
+.float-pill-1 { top: 24%; left: 4%; animation: pill-bob-1 7s ease-in-out infinite; }
+.float-pill-2 { top: 18%; right: 4%; animation: pill-bob-2 6.5s ease-in-out infinite 0.9s; }
+.float-pill-3 { bottom: 36%; right: 3%; animation: pill-bob-3 8s ease-in-out infinite 1.8s; }
+.float-pill-4 { bottom: 44%; left: 3%; animation: pill-bob-1 9s ease-in-out infinite 2.5s; }
+
+@keyframes pill-bob-1 {
+  0%,100% { transform: perspective(900px) rotateX(5deg) rotateY(-12deg) translateY(0); }
+  50%     { transform: perspective(900px) rotateX(-3deg) rotateY(7deg) translateY(-16px); }
+}
+@keyframes pill-bob-2 {
+  0%,100% { transform: perspective(900px) rotateX(-4deg) rotateY(10deg) translateY(0); }
+  50%     { transform: perspective(900px) rotateX(6deg) rotateY(-6deg) translateY(-12px); }
+}
+@keyframes pill-bob-3 {
+  0%,100% { transform: perspective(900px) rotateX(3deg) rotateY(-8deg) translateY(0); }
+  50%     { transform: perspective(900px) rotateX(-5deg) rotateY(11deg) translateY(-18px); }
+}
+
+@media (max-width: 1140px) { .hero-floats { display: none; } }
+
+/* ============ MOBILE ============ */
+@media (max-width: 768px) {
+  /* Hero */
+  .hero { padding: 100px 20px 60px; }
+  .hero-sub { font-size: 16px; margin-bottom: 28px; }
+  h1 { letter-spacing: -1px; }
+  .cta-row { gap: 10px; }
+  .btn { padding: 12px 20px; font-size: 14px; }
+
+  /* Sections */
+  .section-pad { padding: 72px 0; }
+  .container { padding: 0 20px; }
+  .section-title { font-size: clamp(28px, 7vw, 40px); letter-spacing: -0.5px; }
+  .section-sub { font-size: 15px; margin-bottom: 36px; }
+
+  /* Problem + Why grids */
+  .problem-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
+  .why-grid     { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+
+  /* Detection grid — 300px min overflows 360px screen */
+  .detection-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+
+  /* How it works */
+  .flow-step { grid-template-columns: 1fr; gap: 8px; padding: 28px 0; }
+  .flow-num  { font-size: 44px; }
+
+  /* Compare table — horizontal scroll on small screens */
+  .compare-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-row   { min-width: 480px; }
+
+  /* Demo window */
+  .demo-body { grid-template-columns: 1fr; }
+  #radarCanvas { min-height: 260px; }
+
+  /* CTA */
+  .cta-box { padding: 48px 24px; }
+  .cta-box h2 { font-size: clamp(28px, 7vw, 40px); }
+
+  /* Footer */
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* FAQ */
+  .faq-q { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 90px 16px 48px; }
+  .container { padding: 0 16px; }
+  .badge { font-size: 11px; padding: 5px 12px; }
+  .problem-stat { font-size: 44px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+  .compare-row { font-size: 11px; padding: 12px 10px; }
+}
+
+/* ============ HERO PARALLAX ============ */
+.hero-inner, .hero-demo { transition: transform 0.18s ease-out; }
+
+/* ============ FLOW NUMBERS 3D ============ */
+.flow-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-style: italic;
+  line-height: 1;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.55;
+  filter: drop-shadow(2px 3px 0 rgba(13,151,173,0.2)) drop-shadow(4px 6px 10px rgba(13,151,173,0.1));
+}
+
+/* ============ CTA CANVAS ============ */
+#ctaCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 24px;
+  opacity: 0.65;
+}
+
+.cta-box { transition: transform 0.18s ease-out; }
+
+/* ============ 3D SECTION DEPTH LINES ============ */
+#detection::before,
+#why::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(13,151,173,0.03) 0px, rgba(13,151,173,0.03) 1px,
+      transparent 1px, transparent 80px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo" aria-label="Lumera home">
+      <img class="logo-icon" src="images/lumera-icon.png" alt="" />
+      <span class="logo-name">Lumera</span>
+    </a>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#detection">What we detect</a>
+      <a href="#how">How it works</a>
+      <a href="#why">Why Lumera</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="coming-soon.html" class="nav-cta">
+      Request early access
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <canvas id="heroParticles" aria-hidden="true"></canvas>
+  <div class="hero-grid" aria-hidden="true"><div class="grid-plane"></div></div>
+
+  <div class="hero-floats" aria-hidden="true">
+    <div class="float-pill float-pill-1">
+      <span class="pill-dot red"></span>
+      Cluely detected
+      <span class="pill-severity critical">Critical</span>
+    </div>
+    <div class="float-pill float-pill-2">
+      <span class="pill-dot amber"></span>
+      AnyDesk running
+      <span class="pill-severity high">High</span>
+    </div>
+    <div class="float-pill float-pill-3">
+      <span class="pill-dot blue"></span>
+      Earpiece paired
+      <span class="pill-severity medium">Medium</span>
+    </div>
+    <div class="float-pill float-pill-4">
+      <span class="pill-dot green"></span>
+      VM Detected
+      <span class="pill-severity medium">Medium</span>
+    </div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="badge fade-up">
+      <span class="badge-dot"></span>
+      Now in private beta — launching June 2026
+    </div>
+    <h1 class="fade-up">
+      Hire the <em>human</em>,<br />not the AI.
+    </h1>
+    <p class="hero-sub fade-up">
+      Lumera detects AI-assisted cheating, remote desktop takeovers, Bluetooth coaching, and behavioral fraud in real-time during remote interviews — so you can trust every hire.
+    </p>
+    <div class="cta-row fade-up">
+      <a href="coming-soon.html" class="btn btn-primary">
+        Request early access
+        <span class="arrow">→</span>
+      </a>
+      <a href="#how" class="btn btn-secondary">
+        See how it works
+      </a>
+    </div>
+  </div>
+
+  <!-- Demo mockup -->
+  <div class="hero-demo fade-up">
+    <div class="demo-window">
+      <div class="demo-header">
+        <div class="demo-dots">
+          <span class="demo-dot"></span>
+          <span class="demo-dot"></span>
+          <span class="demo-dot"></span>
+        </div>
+        <div class="demo-url">lumera.quore-tex.com/interview/live</div>
+        <div class="demo-status">
+          <span class="badge-dot"></span>
+          MONITORING
+        </div>
+      </div>
+      <div class="demo-body">
+        <div class="demo-video">
+          <canvas id="radarCanvas" aria-label="Live threat detection radar"></canvas>
+          <div class="demo-rec">REC • 00:14:32</div>
+        </div>
+        <div class="demo-panel">
+          <div class="panel-title">Live integrity signals</div>
+          <div class="alert alert-danger">
+            <span class="alert-icon">✕</span>
+            <div class="alert-body">
+              <strong>AI tool detected</strong>
+              Cluely process running
+              <div class="alert-time">14:21:07</div>
+            </div>
+          </div>
+          <div class="alert alert-warning">
+            <span class="alert-icon">!</span>
+            <div class="alert-body">
+              <strong>Bluetooth earpiece</strong>
+              AirPods Pro connected
+              <div class="alert-time">14:15:52</div>
+            </div>
+          </div>
+          <div class="alert alert-info">
+            <span class="alert-icon">i</span>
+            <div class="alert-body">
+              <strong>Tab switch × 3</strong>
+              Frequent window changes
+              <div class="alert-time">14:10:18</div>
+            </div>
+          </div>
+          <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">
+            RISK SCORE: <span style="color: var(--danger); font-weight: 500;">HIGH (84)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUSTED BY ============ -->
+<section class="trusted">
+  <div class="trusted-label">Built for hiring teams that care about integrity</div>
+  <div class="trusted-row">
+    <div class="trusted-item">IT services</div>
+    <div class="trusted-item">Product companies</div>
+    <div class="trusted-item">BFSI</div>
+    <div class="trusted-item">BPO/KPO</div>
+    <div class="trusted-item">Startups</div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section class="section-pad" id="problem">
+  <div class="container">
+    <div class="section-label">The problem</div>
+    <h2 class="section-title">Interview cheating has <em>doubled</em> in just six months.</h2>
+    <p class="section-sub">
+      Candidates now use invisible AI overlays, Bluetooth earpieces, and remote-controlled desktops to fake their way through interviews. Traditional proctoring misses all of it.
+    </p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-stat">35%</div>
+        <h3>Of candidates showed signs of cheating</h3>
+        <p>In late 2025 — more than double the rate from six months earlier.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat">6 in 10</div>
+        <h3>Submitted fraudulent resumes landed jobs</h3>
+        <p>According to a 2024 Resume.org study of hiring across industries.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat">$50k+</div>
+        <h3>Cost of a single bad hire</h3>
+        <p>In direct losses from recruitment, onboarding, and eventual severance.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat">1 in 4</div>
+        <h3>Candidate profiles will be fake by 2028</h3>
+        <p>Driven by generative text, synthetic voice, and deepfake video — per Gartner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DETECTION ============ -->
+<section class="section-pad" id="detection" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">What we detect</div>
+    <h2 class="section-title">Six layers of <em>defense</em>. Zero cheaters slip through.</h2>
+    <p class="section-sub">
+      Lumera combines a lightweight desktop agent, WebRTC video analysis, and behavioral ML to catch every known cheating vector — including the invisible ones.
+    </p>
+
+    <div class="detection-grid">
+      <div class="detection-card" style="--card-accent: #06b6d4; --card-bg: rgba(6, 182, 212, 0.12);">
+        <div class="detection-icon">AI</div>
+        <h3>AI tools running</h3>
+        <p>Detects Cluely, Interview Coder, ChatGPT desktop, Parakeet AI, and other stealth overlay tools candidates use to feed AI answers.</p>
+        <div class="detection-tags">
+          <span class="tag">Cluely</span>
+          <span class="tag">Interview Coder</span>
+          <span class="tag">LeetCode Wizard</span>
+        </div>
+      </div>
+
+      <div class="detection-card" style="--card-accent: #10b981; --card-bg: rgba(16, 185, 129, 0.12);">
+        <div class="detection-icon">RD</div>
+        <h3>Remote desktop takeover</h3>
+        <p>Catches AnyDesk, TeamViewer, RDP, Chrome Remote Desktop — when someone else is controlling the candidate's machine from another location.</p>
+        <div class="detection-tags">
+          <span class="tag">AnyDesk</span>
+          <span class="tag">TeamViewer</span>
+          <span class="tag">RDP</span>
+        </div>
+      </div>
+
+      <div class="detection-card" style="--card-accent: #f59e0b; --card-bg: rgba(245, 158, 11, 0.12);">
+        <div class="detection-icon">BT</div>
+        <h3>Bluetooth coaching devices</h3>
+        <p>Identifies earpieces, AirPods, smart glasses, and hidden coaching devices paired to the candidate's system during the interview.</p>
+        <div class="detection-tags">
+          <span class="tag">Earpieces</span>
+          <span class="tag">AirPods</span>
+          <span class="tag">Smart glasses</span>
+        </div>
+      </div>
+
+      <div class="detection-card" style="--card-accent: #ef4444; --card-bg: rgba(239, 68, 68, 0.12);">
+        <div class="detection-icon">BX</div>
+        <h3>Behavioral anomalies</h3>
+        <p>ML-powered gaze tracking, tab-switching patterns, typing cadence analysis, and external voice detection for impersonation fraud.</p>
+        <div class="detection-tags">
+          <span class="tag">Gaze tracking</span>
+          <span class="tag">Voice analysis</span>
+          <span class="tag">Tab switches</span>
+        </div>
+      </div>
+
+      <div class="detection-card" style="--card-accent: #3b82f6; --card-bg: rgba(59, 130, 246, 0.12);">
+        <div class="detection-icon">VM</div>
+        <h3>Virtual machines</h3>
+        <p>Flags candidates running the interview inside a VM to hide their actual desktop — a common technique Sherlock and others miss.</p>
+        <div class="detection-tags">
+          <span class="tag">VMware</span>
+          <span class="tag">VirtualBox</span>
+          <span class="tag">Sandbox</span>
+        </div>
+      </div>
+
+      <div class="detection-card" style="--card-accent: #ec4899; --card-bg: rgba(236, 72, 153, 0.12);">
+        <div class="detection-icon">NW</div>
+        <h3>AI API call monitoring</h3>
+        <p>Detects background network traffic to OpenAI, Anthropic, Gemini, and other AI services during the interview — even if no app is visible.</p>
+        <div class="detection-tags">
+          <span class="tag">OpenAI</span>
+          <span class="tag">Anthropic</span>
+          <span class="tag">Gemini</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section-pad" id="how">
+  <div class="container">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Deploy in <em>minutes</em>. Protect every interview.</h2>
+    <p class="section-sub">
+      No complex integrations. No disruption to your current workflow. Lumera slots into your existing hiring process — whether you use Zoom, Google Meet, or Microsoft Teams.
+    </p>
+
+    <div class="flow-container">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="flow-content">
+          <h3>Candidate joins interview</h3>
+          <p>
+            The candidate receives an interview link as usual. Before joining, they install a lightweight 12 MB Lumera agent — no admin rights required. The agent auto-launches with the interview.
+          </p>
+          <div class="flow-meta">
+            <span>Zoom</span>
+            <span>Google Meet</span>
+            <span>Microsoft Teams</span>
+            <span>Custom platforms</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="flow-content">
+          <h3>Lumera monitors silently</h3>
+          <p>
+            The agent runs six detection layers in parallel — scanning processes, network traffic, Bluetooth devices, behavior patterns, and display configuration. All processing is real-time and privacy-first.
+          </p>
+          <div class="flow-meta">
+            <span>Process scanning</span>
+            <span>Network fingerprinting</span>
+            <span>WebRTC video analysis</span>
+            <span>Behavioral ML</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="flow-content">
+          <h3>Interviewer sees live alerts</h3>
+          <p>
+            Suspicious activity surfaces instantly on the interviewer's dashboard — with severity ratings, timestamps, and evidence. No need to play detective. Focus on the interview, let Lumera handle the integrity.
+          </p>
+          <div class="flow-meta">
+            <span>Real-time alerts</span>
+            <span>Risk score 0–100</span>
+            <span>Evidence timeline</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <div class="flow-content">
+          <h3>Get a complete fraud report</h3>
+          <p>
+            After the interview, receive a comprehensive PDF report with every detected event, timestamps, confidence scores, and recommendations — ready for HR records and hiring decisions.
+          </p>
+          <div class="flow-meta">
+            <span>PDF export</span>
+            <span>ATS integration</span>
+            <span>Audit trail</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY LUMERA ============ -->
+<section class="section-pad" id="why" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Why Lumera</div>
+    <h2 class="section-title">Built for <em>India first</em>. Priced for real teams.</h2>
+    <p class="section-sub">
+      Global tools cost $25,000/year and don't understand Indian hiring. Lumera is built by an Indian team who gets the problem — and the budget reality.
+    </p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <h3><span class="why-check">✓</span> India data residency</h3>
+        <p>All data stored in Mumbai AWS region. Full DPDP Act compliance. Enterprise BFSI and government-adjacent customers love this.</p>
+      </div>
+      <div class="why-card">
+        <h3><span class="why-check">✓</span> Indic language support</h3>
+        <p>Hindi, Marathi, Tamil, Telugu, Bengali — behavioral detection works across India's real hiring languages.</p>
+      </div>
+      <div class="why-card">
+        <h3><span class="why-check">✓</span> Pay per interview</h3>
+        <p>Starting at ₹99 per interview. No 10,000 interview minimums. Perfect for startups and mid-market companies.</p>
+      </div>
+      <div class="why-card">
+        <h3><span class="why-check">✓</span> Works with your tools</h3>
+        <p>Native Zoom, Google Meet, and Microsoft Teams support. Plus Naukri, Zoho Recruit, and Greenhouse ATS integrations.</p>
+      </div>
+      <div class="why-card">
+        <h3><span class="why-check">✓</span> Candidate transparency</h3>
+        <p>Candidates see exactly what's being monitored. Clear consent. No surveillance anxiety. Better employer brand.</p>
+      </div>
+      <div class="why-card">
+        <h3><span class="why-check">✓</span> 24/5 local support</h3>
+        <p>Real humans in IST timezone. WhatsApp and Slack support. No pointless ticket queues or US-based wait times.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section class="section-pad">
+  <div class="container">
+    <div class="section-label">How we compare</div>
+    <h2 class="section-title">More detection. <em>Fraction</em> of the cost.</h2>
+    <p class="section-sub">
+      Lumera catches threats that Sherlock and Talview miss — while costing a fraction of what enterprise tools charge.
+    </p>
+
+    <div class="compare-table">
+      <div class="compare-row compare-head">
+        <div>Feature</div>
+        <div class="compare-cell lumera-col">Lumera</div>
+        <div class="compare-cell">Sherlock AI</div>
+        <div class="compare-cell">Talview</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">AI tool process detection</div>
+        <div class="compare-cell yes lumera-col">✓ Full</div>
+        <div class="compare-cell partial">◐ Partial</div>
+        <div class="compare-cell no">—</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Remote desktop detection</div>
+        <div class="compare-cell yes lumera-col">✓ Full</div>
+        <div class="compare-cell no">—</div>
+        <div class="compare-cell no">—</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Virtual machine detection</div>
+        <div class="compare-cell yes lumera-col">✓ Full</div>
+        <div class="compare-cell no">—</div>
+        <div class="compare-cell no">—</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Bluetooth device monitoring</div>
+        <div class="compare-cell yes lumera-col">✓ Full</div>
+        <div class="compare-cell no">—</div>
+        <div class="compare-cell no">—</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">India data residency</div>
+        <div class="compare-cell yes lumera-col">✓ Mumbai</div>
+        <div class="compare-cell no">US only</div>
+        <div class="compare-cell partial">◐ Limited</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Indic language support</div>
+        <div class="compare-cell yes lumera-col">✓ 5 languages</div>
+        <div class="compare-cell no">English only</div>
+        <div class="compare-cell partial">◐ Hindi only</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Starting price (per month)</div>
+        <div class="compare-cell yes lumera-col">₹999</div>
+        <div class="compare-cell partial">₹8,300+</div>
+        <div class="compare-cell no">₹1,75,000+</div>
+      </div>
+    </div>
+    <p style="margin-top: 16px; font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">
+      * Competitor data based on publicly available information as of April 2026. "—" indicates feature not documented on the vendor's public site. Verify current details at <a href="https://withsherlock.ai" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: underline;">withsherlock.ai</a> and <a href="https://talview.com" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: underline;">talview.com</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section-pad" id="faq" style="background: var(--bg-soft); border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Questions, <em>answered</em>.</h2>
+
+    <div class="faq-list">
+      <div class="faq-item open" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          What happens if a candidate refuses to install the agent?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Lumera falls back to browser-only monitoring via WebRTC, which still provides strong detection for behavioral signals and external voice. However, desktop agent install is recommended for complete coverage — most companies make it a pre-interview requirement.
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          What data does Lumera collect?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Only interview-session data — process names, Bluetooth device names (not content), network hostnames, and behavioral signals from the camera/microphone. We never record personal files, browsing history, or keystrokes. Full details in our privacy policy.
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          Is the agent removed after the interview?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Yes. The agent terminates automatically when the interview ends and can be uninstalled with one click. No residual processes, background services, or telemetry run after the session.
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          Does Lumera work on Mac and Linux?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Yes. Lumera supports Windows 10/11, macOS 12+, and Ubuntu 22.04+. The same detection capabilities work across all three platforms.
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          How accurate is the detection?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Our current detection accuracy is 97%+ across all fraud vectors, with a false positive rate under 2%. We continuously retrain our models on adversarially generated data to stay ahead of new cheating tactics.
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          Can Lumera integrate with our ATS?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Yes. Native integrations with Naukri, Zoho Recruit, Greenhouse, Lever, and Workday. Fraud reports push directly into candidate profiles. Custom integrations available on enterprise plans.
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">
+          How much does Lumera cost?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">
+          Starter plan begins at ₹999/month for 10 interviews. Growth plan at ₹9,999/month for 300 interviews. Custom enterprise pricing available. Compared to Sherlock (₹8,300+/month) and Talview (₹1.75L+/month), Lumera is 80% more affordable.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section" id="cta">
+  <div class="cta-box">
+    <canvas id="ctaCanvas" aria-hidden="true"></canvas>
+    <h2>Stop hiring <em>AI subscriptions</em>. Start hiring humans.</h2>
+    <p>
+      Join the private beta. Get 30 days free. Lock in early-access pricing forever.
+    </p>
+    <div class="cta-row" style="margin-bottom: 0;">
+      <a href="coming-soon.html" class="btn btn-primary">
+        Request early access
+        <span class="arrow">→</span>
+      </a>
+      <a href="coming-soon.html" class="btn btn-secondary">
+        Book a demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo" aria-label="Lumera — by Quoretex">
+        <img class="logo-full" src="images/lumera-logo-transparent.png" alt="Lumera by Quoretex" style="height:52px; width:auto;" />
+      </a>
+      <p>AI interview integrity platform built for Indian hiring teams. A product of <a href="https://quore-tex.com" target="_blank" rel="noopener" style="color: var(--text); text-decoration: underline; text-decoration-color: var(--border-strong);">Quoretex Technologies</a>.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#problem">Problem</a>
+      <a href="#detection">Detection</a>
+      <a href="#how">How it works</a>
+      <a href="#why">Why Lumera</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="https://quore-tex.com" target="_blank">Quoretex</a>
+      <a href="#">About</a>
+      <a href="#">Careers</a>
+      <a href="mailto:lumera@quore-tex.com">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">DPDP compliance</a>
+      <a href="#">Security</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 <em>Lumera</em> by Quoretex Technologies. Built in Nagpur, India.</div>
+    <div>lumera@quore-tex.com</div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// SCROLL FADE-IN
+// ============================================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.problem-card, .detection-card, .why-card, .flow-step').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+
+// ============================================================
+// HERO PARTICLE NETWORK
+// ============================================================
+(function () {
+  const canvas = document.getElementById('heroParticles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const NODES = 65, DIST = 155;
+  let nodes = [];
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    nodes = Array.from({ length: NODES }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.4 + 0.8,
+      threat: Math.random() < 0.09,
+      pulse: Math.random() * Math.PI * 2,
+    }));
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+      if (n.threat) n.pulse += 0.045;
+    });
+
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < DIST) {
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(26,111,201,${(1 - d/DIST) * 0.1})`;
+          ctx.lineWidth = 0.7;
+          ctx.stroke();
+        }
+      }
+    }
+
+    nodes.forEach(n => {
+      if (n.threat) {
+        const pa = (Math.sin(n.pulse) * 0.5 + 0.5) * 0.28;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + 5 + Math.sin(n.pulse) * 3, 0, Math.PI*2);
+        ctx.strokeStyle = `rgba(220,38,38,${pa})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(220,38,38,0.55)';
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(13,151,173,0.38)';
+        ctx.fill();
+      }
+    });
+    requestAnimationFrame(tick);
+  }
+
+  resize();
+  tick();
+  window.addEventListener('resize', resize);
+})();
+
+// ============================================================
+// RADAR SWEEP (demo window)
+// ============================================================
+(function () {
+  const canvas = document.getElementById('radarCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let angle = 0;
+
+  const threats = [
+    { nx:  0.28, ny: -0.52, color: '#dc2626', label: 'AI Tool',  lit: 0 },
+    { nx: -0.62, ny:  0.18, color: '#f59e0b', label: 'RDP',      lit: 0 },
+    { nx:  0.52, ny:  0.42, color: '#2b8ee8', label: 'BT Coach', lit: 0 },
+    { nx: -0.28, ny: -0.38, color: '#10b981', label: 'VM?',      lit: 0 },
+  ];
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth  * DPR;
+    canvas.height = canvas.offsetHeight * DPR;
+  }
+
+  function draw() {
+    const W = canvas.width / DPR, H = canvas.height / DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const cx = W/2, cy = H/2, R = Math.min(W, H) * 0.39;
+
+    ctx.fillStyle = '#060609';
+    ctx.fillRect(0, 0, W, H);
+
+    // Rings
+    for (let i = 1; i <= 4; i++) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * i/4, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(13,151,173,${i===4 ? 0.28 : 0.1})`;
+      ctx.lineWidth = i===4 ? 1.2 : 0.7;
+      ctx.stroke();
+    }
+
+    // Grid lines
+    ctx.strokeStyle = 'rgba(13,151,173,0.07)';
+    ctx.lineWidth = 0.7;
+    [-1,-0.5,0,0.5,1].forEach(t => {
+      ctx.beginPath(); ctx.moveTo(cx+t*R, cy-R); ctx.lineTo(cx+t*R, cy+R); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx-R, cy+t*R); ctx.lineTo(cx+R, cy+t*R); ctx.stroke();
+    });
+
+    // Sweep fill
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, R, angle - Math.PI*0.42, angle);
+    ctx.closePath();
+    const g = ctx.createLinearGradient(cx, cy, cx + Math.cos(angle)*R, cy + Math.sin(angle)*R);
+    g.addColorStop(0, 'rgba(5,150,105,0)');
+    g.addColorStop(1, 'rgba(5,150,105,0.2)');
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.restore();
+
+    // Arm glow then arm line
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle)*R, cy + Math.sin(angle)*R);
+    ctx.strokeStyle = 'rgba(5,150,105,0.18)';
+    ctx.lineWidth = 7;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle)*R, cy + Math.sin(angle)*R);
+    ctx.strokeStyle = 'rgba(5,150,105,0.95)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Threats
+    threats.forEach(t => {
+      const px = cx + t.nx*R, py = cy + t.ny*R;
+      const ta = Math.atan2(t.ny, t.nx);
+      const diff = ((angle - ta) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
+      if (diff < 0.14) t.lit = 1;
+      t.lit = Math.max(0, t.lit - 0.007);
+
+      if (t.lit > 0.05) {
+        ctx.beginPath();
+        ctx.arc(px, py, 5 + (1-t.lit)*14, 0, Math.PI*2);
+        ctx.strokeStyle = t.color + Math.round(t.lit * 180).toString(16).padStart(2,'0');
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(px, py, 3.5 + t.lit*1.5, 0, Math.PI*2);
+      ctx.fillStyle = t.color;
+      ctx.globalAlpha = 0.4 + t.lit * 0.6;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      if (t.lit > 0.25) {
+        ctx.font = '9px monospace';
+        ctx.fillStyle = t.color;
+        ctx.globalAlpha = t.lit * 0.9;
+        ctx.fillText(t.label, px + 7, py - 4);
+        ctx.globalAlpha = 1;
+      }
+    });
+
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3.5, 0, Math.PI*2);
+    ctx.fillStyle = '#059669';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(cx, cy, 7, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(5,150,105,0.35)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    angle += 0.019;
+    if (angle > Math.PI*2) angle -= Math.PI*2;
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+  window.addEventListener('resize', resize);
+})();
+
+// ============================================================
+// HERO PARALLAX ON MOUSE MOVE
+// ============================================================
+(function () {
+  const hero     = document.querySelector('.hero');
+  const inner    = document.querySelector('.hero-inner');
+  const demo     = document.querySelector('.hero-demo');
+  const grid     = document.querySelector('.hero-grid');
+  if (!hero) return;
+
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    if (grid)  grid.style.transform  = `translateX(${x * 22}px) translateY(${y * 12}px)`;
+    if (inner) inner.style.transform = `translateX(${x * 9}px)  translateY(${y * 6}px)`;
+    if (demo)  demo.style.transform  =
+      `perspective(1400px) rotateX(${y * 2.5}deg) rotateY(${x * -2.5}deg) translateX(${x * -14}px) translateY(${y * -8}px)`;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    if (grid)  grid.style.transform  = '';
+    if (inner) inner.style.transform = '';
+    if (demo)  demo.style.transform  = '';
+  });
+})();
+
+// ============================================================
+// CTA — INTERACTIVE 3D WAVE GRID + BOX TILT
+// ============================================================
+(function () {
+  const canvas  = document.getElementById('ctaCanvas');
+  const ctaBox  = document.querySelector('.cta-box');
+  const ctaSec  = document.querySelector('.cta-section');
+  if (!canvas || !ctaBox) return;
+
+  const ctx = canvas.getContext('2d');
+  let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5, t = 0;
+
+  function resize() {
+    canvas.width  = ctaBox.offsetWidth;
+    canvas.height = ctaBox.offsetHeight;
+  }
+
+  ctaSec.addEventListener('mousemove', e => {
+    const r = ctaBox.getBoundingClientRect();
+    tmx = (e.clientX - r.left) / r.width;
+    tmy = (e.clientY - r.top)  / r.height;
+    ctaBox.style.transform = `perspective(1200px) rotateX(${(tmy - 0.5) * -5}deg) rotateY(${(tmx - 0.5) * 5}deg)`;
+  });
+  ctaSec.addEventListener('mouseleave', () => {
+    tmx = 0.5; tmy = 0.5;
+    ctaBox.style.transform = '';
+  });
+
+  function draw() {
+    mx += (tmx - mx) * 0.06;
+    my += (tmy - my) * 0.06;
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+    const COLS = 18, ROWS = 10;
+    const cw = W / COLS, ch = H / ROWS;
+
+    const drawLines = (byRow) => {
+      const max = byRow ? ROWS : COLS;
+      for (let a = 0; a <= max; a++) {
+        ctx.beginPath();
+        for (let b = 0; b <= (byRow ? COLS : ROWS); b++) {
+          const r = byRow ? a : b, c = byRow ? b : a;
+          const fy = r / ROWS, fx = c / COLS;
+          const wave = Math.sin(fx * Math.PI * 2.2 + t) * 14
+                     + Math.sin(fy * Math.PI * 2.8 + t * 0.8) * 8;
+          const tx = (mx - 0.5) * 24 * (1 - fy * 0.5);
+          const ty = (my - 0.5) * 14 * (1 - fy * 0.5);
+          const px = c * cw + tx, py = r * ch + wave + ty;
+          b === 0 && byRow    ? ctx.moveTo(px, py)
+          : a === 0 && !byRow ? ctx.moveTo(px, py)
+          : ctx.lineTo(px, py);
+        }
+        const depth = byRow ? (ROWS - a) / ROWS : 0.5;
+        ctx.strokeStyle = `rgba(13,151,173,${0.05 + depth * 0.1})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    };
+    drawLines(true);
+    drawLines(false);
+    t += 0.011;
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  draw();
+  window.addEventListener('resize', resize);
+})();
+
+// ============================================================
+// 3D CARD TILT
+// ============================================================
+document.querySelectorAll('.detection-card, .problem-card, .why-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transition = 'transform 0.08s ease, box-shadow 0.08s ease';
+    card.style.transform = `perspective(700px) rotateX(${y * -11}deg) rotateY(${x * 11}deg) translateY(-6px) scale(1.01)`;
+    card.style.boxShadow = `${x * -12}px ${y * -12}px 30px rgba(13,151,173,0.1)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
+    card.style.transform = '';
+    card.style.boxShadow = '';
+  });
+});
+</script>
+
+</body>
+</html>
