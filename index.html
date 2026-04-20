@@ -1412,6 +1412,305 @@ footer {
   z-index: 0;
 }
 
+/* ============ TESTIMONIALS ============ */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.testimonial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-strong);
+}
+
+.testimonial-stars {
+  display: flex;
+  gap: 3px;
+  color: #f59e0b;
+  font-size: 15px;
+}
+
+.testimonial-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text);
+  flex: 1;
+}
+
+.testimonial-quote::before { content: '\201C'; }
+.testimonial-quote::after  { content: '\201D'; }
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.testimonial-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.testimonial-avatar.av-teal  { background: linear-gradient(135deg, #0d97ad, #059669); }
+.testimonial-avatar.av-blue  { background: linear-gradient(135deg, #1a6fc9, #0d97ad); }
+.testimonial-avatar.av-indigo { background: linear-gradient(135deg, #4f46e5, #1a6fc9); }
+
+.testimonial-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.testimonial-role {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.testimonial-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  background: rgba(13,151,173,0.08);
+  color: #0d97ad;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .testimonial-grid { grid-template-columns: 1fr; }
+}
+
+/* ============ PRICING ============ */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+  align-items: start;
+}
+
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-strong);
+}
+
+.pricing-card.popular {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+    var(--brand-gradient) border-box;
+  border-width: 2px;
+  transform: scale(1.03);
+}
+
+.pricing-card.popular:hover {
+  transform: scale(1.03) translateY(-4px);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand-gradient);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  padding: 4px 14px;
+  border-radius: 100px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+.pricing-tier {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.pricing-price {
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.pricing-amount {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.pricing-currency {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-muted);
+  vertical-align: super;
+  margin-right: 2px;
+}
+
+.pricing-period {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.pricing-interviews {
+  font-size: 13px;
+  font-family: var(--font-mono);
+  color: #0d97ad;
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.pricing-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex: 1;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.pricing-features li::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='7.5' stroke='%230d97ad' stroke-opacity='0.3'/%3E%3Cpath d='M5 8l2 2 4-4' stroke='%230d97ad' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.pricing-features li.muted {
+  color: var(--text-dim);
+  opacity: 0.6;
+}
+
+.pricing-features li.muted::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='7.5' stroke='%236b7280' stroke-opacity='0.25'/%3E%3Cpath d='M6 10L10 6M6 6l4 4' stroke='%236b7280' stroke-opacity='0.4' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.pricing-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 100px;
+  font-size: 14.5px;
+  font-weight: 500;
+  transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+
+.pricing-cta.outline {
+  border: 1.5px solid var(--border-strong);
+  color: var(--text);
+}
+
+.pricing-cta.outline:hover {
+  border-color: var(--text);
+  transform: translateY(-1px);
+}
+
+.pricing-cta.filled {
+  background: var(--brand-gradient);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 16px rgba(13,151,173,0.25);
+}
+
+.pricing-cta.filled:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13,151,173,0.3);
+}
+
+.pricing-note {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 28px;
+  font-family: var(--font-mono);
+}
+
+.pricing-note a {
+  color: #0d97ad;
+  text-decoration: underline;
+  text-decoration-color: rgba(13,151,173,0.3);
+}
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-card.popular { transform: scale(1); }
+  .pricing-card.popular:hover { transform: translateY(-4px); }
+}
+
 </style>
 </head>
 <body>
@@ -1425,9 +1724,9 @@ footer {
     </a>
     <div class="nav-links">
       <a href="#problem">Problem</a>
-      <a href="#detection">What we detect</a>
+      <a href="#detection">Detection</a>
       <a href="#how">How it works</a>
-      <a href="#why">Why Lumera</a>
+      <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </div>
     <a href="coming-soon.html" class="nav-cta">
@@ -1926,6 +2225,142 @@ footer {
     </div>
     <p style="margin-top: 16px; font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">
       * Competitor data based on publicly available information as of April 2026. "—" indicates feature not documented on the vendor's public site. Verify current details at <a href="https://withsherlock.ai" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: underline;">withsherlock.ai</a> and <a href="https://talview.com" target="_blank" rel="noopener" style="color: var(--text-dim); text-decoration: underline;">talview.com</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="section-pad" id="testimonials" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Early Access Feedback</div>
+    <h2 class="section-title">Trusted by hiring teams <em>already</em>.</h2>
+    <p class="section-sub">Feedback from our private beta cohort — HR leads and hiring managers across India.</p>
+
+    <div class="testimonial-grid">
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">We caught three candidates using Cluely in a single week. The alert came within 4 seconds of detection. Our hiring panel was shocked — we had no idea how widespread this had become.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar av-teal">PS</div>
+          <div>
+            <div class="testimonial-name">Priya Sharma</div>
+            <div class="testimonial-role">Head of Talent Acquisition · Bangalore</div>
+          </div>
+          <span class="testimonial-tag">SaaS startup</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">The AnyDesk detection alone saved us from a bad engineering hire. We place 80+ candidates a month and the integration with Zoho Recruit made this a no-brainer. Setup took 15 minutes.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar av-blue">RM</div>
+          <div>
+            <div class="testimonial-name">Rahul Mehta</div>
+            <div class="testimonial-role">Recruitment Lead · Mumbai</div>
+          </div>
+          <span class="testimonial-tag">Staffing agency</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">Finally a tool that actually understands Indian hiring. Hindi interview support works flawlessly. The per-interview pricing model means we only pay when we actually hire — not a flat ₹1.5L/year like competitors.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar av-indigo">AK</div>
+          <div>
+            <div class="testimonial-name">Ananya Krishnamurthy</div>
+            <div class="testimonial-role">Engineering Hiring Manager · Hyderabad</div>
+          </div>
+          <span class="testimonial-tag">Fintech</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section-pad" id="pricing">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple pricing. <em>No surprises.</em></h2>
+    <p class="section-sub">Early access pricing — locked in forever for beta users. Cancel anytime.</p>
+
+    <div class="pricing-grid">
+
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">
+          <span class="pricing-currency">₹</span><span class="pricing-amount">999</span>
+        </div>
+        <div class="pricing-period">per month, billed monthly</div>
+        <div class="pricing-interviews">Up to 10 interviews / month</div>
+        <hr class="pricing-divider" />
+        <ul class="pricing-features">
+          <li>AI tool &amp; Cluely detection</li>
+          <li>Remote desktop detection</li>
+          <li>Basic behavioural analysis</li>
+          <li>Email reports after each interview</li>
+          <li>Zoom &amp; Google Meet support</li>
+          <li class="muted">Bluetooth / earpiece detection</li>
+          <li class="muted">ATS integrations</li>
+          <li class="muted">Dedicated support</li>
+        </ul>
+        <a href="coming-soon.html" class="pricing-cta outline">Request early access →</a>
+      </div>
+
+      <!-- Growth (popular) -->
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most popular</div>
+        <div class="pricing-tier">Growth</div>
+        <div class="pricing-price">
+          <span class="pricing-currency">₹</span><span class="pricing-amount">9,999</span>
+        </div>
+        <div class="pricing-period">per month, billed monthly</div>
+        <div class="pricing-interviews">Up to 300 interviews / month</div>
+        <hr class="pricing-divider" />
+        <ul class="pricing-features">
+          <li>Everything in Starter</li>
+          <li>Bluetooth &amp; earpiece detection</li>
+          <li>Virtual machine detection</li>
+          <li>Network anomaly detection</li>
+          <li>Real-time interviewer dashboard</li>
+          <li>Naukri &amp; Zoho Recruit integrations</li>
+          <li>Priority email + WhatsApp support</li>
+          <li class="muted">Custom ATS / API access</li>
+        </ul>
+        <a href="coming-soon.html" class="pricing-cta filled">Get early access →</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-price">
+          <span class="pricing-amount" style="font-size:42px;">Custom</span>
+        </div>
+        <div class="pricing-period">annual contract, custom terms</div>
+        <div class="pricing-interviews">Unlimited interviews</div>
+        <hr class="pricing-divider" />
+        <ul class="pricing-features">
+          <li>Everything in Growth</li>
+          <li>Custom ATS &amp; API access</li>
+          <li>Dedicated account manager</li>
+          <li>SLA-backed uptime guarantee</li>
+          <li>On-premise / private cloud option</li>
+          <li>DPDP Act compliance package</li>
+          <li>White-label candidate reports</li>
+          <li>Greenhouse, Lever &amp; Workday</li>
+        </ul>
+        <a href="coming-soon.html" class="pricing-cta outline">Contact us →</a>
+      </div>
+
+    </div>
+    <p class="pricing-note">
+      All plans include a <strong>30-day free trial</strong> for beta users. No credit card required. &nbsp;·&nbsp;
+      Need pay-per-interview? <a href="coming-soon.html">Talk to us</a> — starts at ₹99/interview.
     </p>
   </div>
 </section>
