@@ -1748,6 +1748,111 @@ footer {
   .pricing-card.popular:hover { transform: translateY(-4px); }
 }
 
+/* ============ MOBILE NAV ============ */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.nav-burger:hover { background: rgba(10,10,15,0.06); }
+
+.nav-burger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+
+.nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,15,0.3);
+  backdrop-filter: blur(4px);
+  z-index: 98;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.mobile-overlay.visible { opacity: 1; }
+
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  transform: translateY(-100%);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  padding: 80px 20px 28px;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 8px 40px rgba(10,10,15,0.12);
+}
+
+.mobile-drawer.open { transform: translateY(0); }
+
+.mobile-drawer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-link {
+  display: block;
+  padding: 13px 16px;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-radius: 12px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mobile-link:hover {
+  background: var(--bg-soft);
+  color: var(--text);
+}
+
+.mobile-cta {
+  display: block;
+  margin-top: 12px;
+  padding: 14px 20px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.mobile-cta:hover { opacity: 0.88; }
+
+@media (max-width: 768px) {
+  .nav-burger   { display: flex; }
+  .mobile-drawer, .mobile-overlay { display: block; }
+}
+
 /* ============ INTEGRATIONS ============ */
 .integrations {
   padding: 16px 32px 72px;
@@ -1843,8 +1948,24 @@ footer {
       Request early access
       <span class="arrow">→</span>
     </a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile nav drawer -->
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="mobile-drawer-inner">
+    <a href="#problem"   class="mobile-link" onclick="closeDrawer()">Problem</a>
+    <a href="#detection" class="mobile-link" onclick="closeDrawer()">Detection</a>
+    <a href="#how"       class="mobile-link" onclick="closeDrawer()">How it works</a>
+    <a href="#pricing"   class="mobile-link" onclick="closeDrawer()">Pricing</a>
+    <a href="#faq"       class="mobile-link" onclick="closeDrawer()">FAQ</a>
+    <a href="coming-soon.html" class="mobile-cta">Request early access →</a>
+  </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeDrawer()"></div>
 
 <!-- ============ HERO ============ -->
 <section class="hero">
@@ -3015,6 +3136,35 @@ document.querySelectorAll('.detection-card, .problem-card, .why-card').forEach(c
     card.style.transform = '';
     card.style.boxShadow = '';
   });
+});
+
+// ============================================================
+// MOBILE NAV DRAWER
+// ============================================================
+const burger  = document.getElementById('navBurger');
+const drawer  = document.getElementById('mobileDrawer');
+const overlay = document.getElementById('mobileOverlay');
+
+function openDrawer() {
+  burger.classList.add('open');
+  drawer.classList.add('open');
+  overlay.classList.add('visible');
+  burger.setAttribute('aria-expanded', 'true');
+  drawer.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  burger.classList.remove('open');
+  drawer.classList.remove('open');
+  overlay.classList.remove('visible');
+  burger.setAttribute('aria-expanded', 'false');
+  drawer.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+burger.addEventListener('click', () => {
+  burger.classList.contains('open') ? closeDrawer() : openDrawer();
 });
 </script>
 
