@@ -186,7 +186,8 @@ nav {
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-cta   { display: none; }
-  .nav-inner { padding: 14px 20px; }
+  nav        { padding: 10px 16px; }
+  .nav-inner { padding: 10px 16px; border-radius: 50px; }
 }
 
 /* ============ HERO ============ */
@@ -1315,55 +1316,91 @@ footer {
 /* ============ MOBILE ============ */
 @media (max-width: 768px) {
   /* Hero */
-  .hero { padding: 100px 20px 60px; }
+  .hero { padding: 110px 20px 60px; }
   .hero-sub { font-size: 16px; margin-bottom: 28px; }
   h1 { letter-spacing: -1px; }
-  .cta-row { gap: 10px; }
-  .btn { padding: 12px 20px; font-size: 14px; }
+  .cta-row { gap: 10px; flex-direction: column; align-items: center; }
+  .btn { padding: 13px 24px; font-size: 14px; width: 100%; max-width: 280px; text-align: center; justify-content: center; }
 
   /* Sections */
-  .section-pad { padding: 72px 0; }
+  .section-pad { padding: 64px 0; }
   .container { padding: 0 20px; }
-  .section-title { font-size: clamp(28px, 7vw, 40px); letter-spacing: -0.5px; }
-  .section-sub { font-size: 15px; margin-bottom: 36px; }
+  .section-title { font-size: clamp(26px, 7vw, 38px); letter-spacing: -0.5px; }
+  .section-sub { font-size: 15px; margin-bottom: 32px; }
 
   /* Problem + Why grids */
-  .problem-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
-  .why-grid     { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+  .problem-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
+  .why-grid     { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
 
-  /* Detection grid — 300px min overflows 360px screen */
-  .detection-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+  /* Detection grid */
+  .detection-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
 
   /* How it works */
   .flow-step { grid-template-columns: 1fr; gap: 8px; padding: 28px 0; }
   .flow-num  { font-size: 44px; }
 
-  /* Compare table — horizontal scroll on small screens */
+  /* Compare table — horizontal scroll */
   .compare-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .compare-row   { min-width: 480px; }
 
   /* Demo window */
   .demo-body { grid-template-columns: 1fr; }
-  #radarCanvas { min-height: 260px; }
+  #radarCanvas { min-height: 220px; }
+  .hero-demo { margin: 0 -4px; border-radius: 16px; }
+
+  /* Integrations */
+  .integrations { padding: 12px 20px 56px; }
+  .integrations-track { gap: 20px; }
+  .integration-item { font-size: 13px; gap: 7px; }
+  .integration-icon { width: 22px; height: 22px; }
+
+  /* Testimonials */
+  .testimonial-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+  .testimonial-card { padding: 24px 20px; }
+  .testimonial-quote { font-size: 15.5px; }
+
+  /* Pricing */
+  .pricing-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+  .pricing-card { padding: 28px 24px; }
+  .pricing-amount { font-size: 42px; }
+  .popular-badge { font-size: 10.5px; }
 
   /* CTA */
-  .cta-box { padding: 48px 24px; }
-  .cta-box h2 { font-size: clamp(28px, 7vw, 40px); }
+  .cta-box { padding: 48px 20px; border-radius: 20px; }
+  .cta-box h2 { font-size: clamp(26px, 7vw, 38px); }
+  .cta-section { padding: 48px 16px; }
 
   /* Footer */
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
 
   /* FAQ */
   .faq-q { font-size: 15px; }
+  .faq-item { padding: 18px 0; }
 }
 
 @media (max-width: 480px) {
-  .hero { padding: 90px 16px 48px; }
+  .hero { padding: 96px 16px 44px; }
   .container { padding: 0 16px; }
   .badge { font-size: 11px; padding: 5px 12px; }
   .problem-stat { font-size: 44px; }
   .footer-inner { grid-template-columns: 1fr; gap: 24px; }
   .compare-row { font-size: 11px; padding: 12px 10px; }
+
+  /* Integrations — wrap to 2 per row */
+  .integrations-track { gap: 16px 24px; }
+  .integration-item { width: calc(50% - 12px); justify-content: flex-start; }
+
+  /* Testimonials */
+  .testimonial-author { flex-wrap: wrap; }
+  .testimonial-tag { margin-left: 0; margin-top: 8px; }
+
+  /* Pricing */
+  .pricing-features li { font-size: 13px; }
+  .pricing-cta { padding: 12px 20px; font-size: 14px; }
+
+  /* CTA buttons stacked */
+  .cta-box .cta-row { flex-direction: column; align-items: center; }
+  .cta-box .btn { width: 100%; max-width: 260px; justify-content: center; }
 }
 
 /* ============ HERO PARALLAX ============ */
