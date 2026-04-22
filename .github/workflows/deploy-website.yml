@@ -1,4 +1,4 @@
-name: Verify and Deploy Quoretex Frontend
+name: Verify and Deploy lumera Frontend
 
 on:
   push:
@@ -86,4 +86,4 @@ jobs:
             dist/ \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.VPS_TARGET_DIR }}
 
-          echo "✅ Quoretex frontend deployed successfully"
+          echo "✅ Lumera frontend deployed successfully"
