@@ -26,11 +26,12 @@ jobs:
             -e "ssh -i ~/.ssh/githubdeployforlumera" \
             --exclude=".git" \
             --exclude=".github" \
-            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/lumera/
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/complaint/lumera_quore-tex_com/
 
-      - name: Reload Apache
+      - name: Set Permissions & Reload Apache
         run: |
           ssh -i ~/.ssh/githubdeployforlumera ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            sudo chmod -R 755 /var/www/lumera
+            sudo chmod -R 755 /home/complaint/lumera_quore-tex_com
+            sudo chown -R apache:apache /home/complaint/lumera_quore-tex_com
             sudo systemctl restart httpd
           EOF
