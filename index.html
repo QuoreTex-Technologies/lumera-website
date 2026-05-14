@@ -1547,6 +1547,33 @@ footer {
 @media (max-width: 1140px) { .hero-floats { display: none; } }
 
 /* ============ MOBILE ============ */
+/* ===== TABLET (769px – 1024px) ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container { padding: 0 28px; }
+  h1 { font-size: clamp(40px, 6vw, 64px); }
+  .section-title { font-size: clamp(28px, 4vw, 42px); }
+
+  /* Preview: reduce sidebar width */
+  .preview-layout { grid-template-columns: 160px 1fr; }
+  .preview-sidebar-item { font-size: 12px; padding: 10px 12px; }
+
+  /* Pricing: 1 column on tablet to avoid squish */
+  .pricing-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
+
+  /* Comparison table scroll on tablet */
+  .compare-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-row { min-width: 560px; }
+
+  /* ATS flow wrap on tablet */
+  .ats-flow { flex-wrap: wrap; gap: 10px; }
+  .ats-flow-step { min-width: 130px; }
+
+  /* How it works: 2 columns on tablet */
+  .flow-container { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+  .flow-container::before { display: none; }
+  .flow-step { padding-right: 20px; }
+}
+
 @media (max-width: 768px) {
   /* Hero */
   .hero { padding: 110px 20px 60px; }
@@ -1554,6 +1581,7 @@ footer {
   h1 { letter-spacing: -1px; }
   .cta-row { gap: 10px; flex-direction: column; align-items: center; }
   .btn { padding: 13px 24px; font-size: 14px; width: 100%; max-width: 280px; text-align: center; justify-content: center; }
+  .hero .fade-up[style*="margin-top:16px"] { text-align: center; }
 
   /* Sections */
   .section-pad { padding: 64px 0; }
@@ -1578,6 +1606,10 @@ footer {
   .demo-body { grid-template-columns: 1fr; }
   #radarCanvas { min-height: 220px; }
   .hero-demo { margin: 0 -4px; border-radius: 16px; }
+
+  /* Preview dashboard: hide sidebar, full width main */
+  .preview-sidebar { display: none; }
+  .preview-layout { grid-template-columns: 1fr; }
 
   /* Integrations */
   .integrations { padding: 12px 20px 56px; }
@@ -1631,24 +1663,28 @@ footer {
   /* CTA buttons stacked */
   .cta-box .cta-row { flex-direction: column; align-items: center; }
   .cta-box .btn { width: 100%; max-width: 260px; justify-content: center; }
+
+  /* Book demo section */
+  #book-demo .container { padding: 0 12px; }
+  #my-cal-inline-lumera-demo { min-height: 500px !important; border-radius: 12px; }
+
+  /* Preview window - hide sidebar on small mobile */
+  .preview-sidebar { display: none; }
+  .preview-layout { grid-template-columns: 1fr; }
+
+  /* ATS flow - stack vertically, hide arrows */
+  .ats-flow { flex-direction: column; align-items: stretch; gap: 8px; }
+  .ats-flow-step { min-width: unset; width: 100%; flex-direction: row; gap: 16px; text-align: left; padding: 16px 20px; }
+  .ats-flow-arrow { display: none; }
+  .ats-flow-icon { flex-shrink: 0; }
+
+  /* Integrations label lines */
+  .integrations-label::before, .integrations-label::after { width: 24px; }
 }
 
 /* ============ HERO PARALLAX ============ */
 .hero-inner, .hero-demo { transition: transform 0.18s ease-out; }
 
-/* ============ FLOW NUMBERS 3D ============ */
-.flow-num {
-  font-family: var(--font-display);
-  font-size: 72px;
-  font-style: italic;
-  line-height: 1;
-  background: var(--brand-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0.55;
-  filter: drop-shadow(2px 3px 0 rgba(13,151,173,0.2)) drop-shadow(4px 6px 10px rgba(13,151,173,0.1));
-}
 
 /* ============ CTA CANVAS ============ */
 #ctaCanvas {
@@ -3740,7 +3776,7 @@ footer {
       30 minutes. We'll walk you through the HR dashboard, live detection, and ATS report push — using a real interview simulation. No slides, no sales pitch.
     </p>
 
-    <div style="width:100%; min-height:700px; overflow:scroll; border:1px solid var(--border); border-radius:16px; background:var(--bg-card); margin-top: 48px;" id="my-cal-inline-lumera-demo"></div>
+    <div style="width:100%; min-height:600px; overflow:hidden; border-radius:16px; margin-top: 48px;" id="my-cal-inline-lumera-demo"></div>
   </div>
 </section>
 
