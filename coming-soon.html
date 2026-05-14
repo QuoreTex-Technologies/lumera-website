@@ -418,11 +418,11 @@ footer a { color: var(--text-dim); text-decoration: underline; text-underline-of
 
 <nav>
   <div class="nav-inner">
-    <a href="lumera-website.html" class="logo" aria-label="Lumera home">
+    <a href="index.html" class="logo" aria-label="Lumera home">
       <img class="logo-icon" src="images/lumera-icon.png" alt="" />
       <span class="logo-name">Lumera</span>
     </a>
-    <a href="lumera-website.html" class="nav-back">
+    <a href="index.html" class="nav-back">
       ← Back to site
     </a>
   </div>
@@ -531,24 +531,56 @@ footer a { color: var(--text-dim); text-decoration: underline; text-underline-of
   tick();
 })();
 
-// Form submit (replace with real endpoint — Formspree / Tally / your API)
-document.getElementById('waitlistForm').addEventListener('submit', function (e) {
+// Waitlist form — Formspree endpoint
+// 1. Go to https://formspree.io and create a free form
+// 2. Replace YOUR_FORM_ID below with your form ID (e.g. "xpznvgqr")
+const FORMSPREE_ID = 'YOUR_FORM_ID';
+
+document.getElementById('waitlistForm').addEventListener('submit', async function (e) {
   e.preventDefault();
-  const email = document.getElementById('femail').value.trim();
+
+  const name    = document.getElementById('fname').value.trim();
+  const email   = document.getElementById('femail').value.trim();
+  const company = document.getElementById('fcompany').value.trim();
+  const size    = document.getElementById('fsize').value;
+
   if (!email || !email.includes('@')) {
     document.getElementById('femail').focus();
     return;
   }
+
   const btn = document.getElementById('submitBtn');
   btn.textContent = 'Joining…';
   btn.classList.add('loading');
 
-  // Simulate async — replace with fetch('/api/waitlist', { method:'POST', body: ... })
-  setTimeout(() => {
-    document.getElementById('confirmedEmail').textContent = email;
-    document.getElementById('waitlistForm').classList.add('hide');
-    document.getElementById('successState').classList.add('show');
-  }, 900);
+  try {
+    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name, email, company, size,
+        _subject: `New Lumera waitlist: ${name || email}`,
+        _replyto: email
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('confirmedEmail').textContent = email;
+      document.getElementById('waitlistForm').classList.add('hide');
+      document.getElementById('successState').classList.add('show');
+    } else {
+      throw new Error('Submission failed');
+    }
+  } catch (err) {
+    btn.textContent = 'Join the waitlist';
+    btn.classList.remove('loading');
+    // Fallback: open mailto if Formspree not configured
+    if (FORMSPREE_ID === 'YOUR_FORM_ID') {
+      window.location.href = `mailto:lumera@quore-tex.com?subject=Waitlist signup&body=Name: ${name}%0AEmail: ${email}%0ACompany: ${company}%0ASize: ${size}`;
+    } else {
+      alert('Something went wrong. Please email us at lumera@quore-tex.com');
+    }
+  }
 });
 </script>
 </body>

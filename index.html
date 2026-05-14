@@ -173,6 +173,8 @@ nav {
   border-radius: 100px;
   font-size: 13.5px;
   font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
   transition: border-color 0.2s, background 0.2s, transform 0.2s;
   white-space: nowrap;
 }
@@ -208,13 +210,16 @@ nav {
 .hero::before {
   content: '';
   position: absolute;
-  top: -10%;
+  top: -5%;
   left: 50%;
   transform: translateX(-50%);
-  width: 900px;
-  height: 600px;
-  background: radial-gradient(ellipse at 50% 20%, rgba(13,151,173,0.22) 0%, rgba(26,111,201,0.10) 40%, transparent 72%);
-  filter: blur(60px);
+  width: 1100px;
+  height: 700px;
+  background:
+    radial-gradient(ellipse 60% 55% at 40% 30%, rgba(13,151,173,0.30) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 65% 40%, rgba(5,150,105,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 30% 60%, rgba(26,111,201,0.15) 0%, transparent 55%);
+  filter: blur(48px);
   pointer-events: none;
   z-index: 0;
 }
@@ -697,8 +702,10 @@ section {
 
 .detection-card:hover {
   background: var(--bg-card-hover);
-  transform: translateY(-4px);
-  border-color: var(--border-strong);
+  transform: translateY(-5px);
+  border-color: color-mix(in srgb, var(--card-accent, var(--accent)) 40%, transparent);
+  box-shadow: 0 8px 32px -4px color-mix(in srgb, var(--card-accent, var(--accent)) 20%, transparent),
+              0 2px 8px rgba(10,10,15,0.06);
 }
 
 .detection-icon {
@@ -718,13 +725,15 @@ section {
 /* Wavy underline directly on h1 em — no wrapper span needed */
 h1 em {
   position: relative;
+  display: inline-block;
+  vertical-align: baseline;
 }
 h1 em::after {
   content: '';
   position: absolute;
   left: 0; right: 0;
-  bottom: -10px;
-  height: 10px;
+  bottom: -5px;
+  height: 8px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='10' viewBox='0 0 120 10'%3E%3Cpath d='M0 6 C8 2,16 9,28 5 C38 2,46 8,60 5 C72 2,82 8,92 5 C104 2,112 8,120 5' stroke='%230d97ad' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: auto 100%;
@@ -790,54 +799,83 @@ h1 em::after {
 
 /* ============ HOW IT WORKS ============ */
 .flow-container {
-  margin-top: 80px;
+  margin-top: 72px;
   position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+/* Connecting line between nodes */
+.flow-container::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: calc(12.5% + 20px);
+  right: calc(12.5% + 20px);
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong) 0%, var(--accent) 40%, var(--success) 100%);
+  opacity: 0.4;
+  z-index: 0;
 }
 
 .flow-step {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 40px;
-  padding: 40px 0;
-  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 24px 0 0;
   position: relative;
 }
+.flow-step:last-child { padding-right: 0; }
 
-.flow-step:last-child {
-  border-bottom: none;
-}
-
+/* Circle node */
 .flow-num {
-  font-family: var(--font-display);
-  font-size: 72px;
-  font-style: italic;
-  line-height: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
   color: var(--accent);
-  opacity: 0.4;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.flow-step:hover .flow-num {
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg-card));
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .flow-content h3 {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 400;
-  letter-spacing: -0.5px;
-  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  margin-bottom: 10px;
+  line-height: 1.35;
 }
 
 .flow-content p {
-  font-size: 16px;
+  font-size: 13.5px;
   color: var(--text-muted);
   line-height: 1.6;
-  max-width: 560px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .flow-meta {
   display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 5px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-dim);
 }
 
@@ -846,12 +884,28 @@ h1 em::after {
   color: var(--accent);
 }
 
-@media (max-width: 680px) {
-  .flow-step {
+/* Stack vertically on small screens */
+@media (max-width: 860px) {
+  .flow-container {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 0;
   }
-  .flow-num { font-size: 48px; }
+  .flow-container::before { display: none; }
+  .flow-step {
+    flex-direction: row;
+    gap: 20px;
+    padding: 0 0 32px;
+    border-left: 1px solid var(--border);
+    padding-left: 24px;
+    margin-left: 27px;
+  }
+  .flow-step:last-child { border-left-color: transparent; }
+  .flow-num {
+    margin-bottom: 0;
+    margin-left: -51px;
+    flex-shrink: 0;
+  }
+  .flow-content { padding-top: 12px; }
 }
 
 /* ============ WHY LUMERA ============ */
@@ -1335,9 +1389,7 @@ footer {
   /* Detection grid */
   .detection-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
 
-  /* How it works */
-  .flow-step { grid-template-columns: 1fr; gap: 8px; padding: 28px 0; }
-  .flow-num  { font-size: 44px; }
+  /* How it works handled by flow-container media query */
 
   /* Compare table — horizontal scroll */
   .compare-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -1350,8 +1402,8 @@ footer {
 
   /* Integrations */
   .integrations { padding: 12px 20px 56px; }
-  .integrations-track { gap: 20px; }
-  .integration-item { font-size: 13px; gap: 7px; }
+  .integrations-group { gap: 8px; }
+  .integration-item { font-size: 13px; gap: 7px; padding: 7px 12px 7px 8px; }
   .integration-icon { width: 22px; height: 22px; }
 
   /* Testimonials */
@@ -1386,9 +1438,8 @@ footer {
   .footer-inner { grid-template-columns: 1fr; gap: 24px; }
   .compare-row { font-size: 11px; padding: 12px 10px; }
 
-  /* Integrations — wrap to 2 per row */
-  .integrations-track { gap: 16px 24px; }
-  .integration-item { width: calc(50% - 12px); justify-content: flex-start; }
+  /* Integrations — wrap naturally */
+  .integrations-group { gap: 8px; }
 
   /* Testimonials */
   .testimonial-author { flex-wrap: wrap; }
@@ -1855,44 +1906,56 @@ footer {
 
 /* ============ INTEGRATIONS ============ */
 .integrations {
-  padding: 16px 32px 72px;
+  padding: 0 32px 72px;
   text-align: center;
   position: relative;
   z-index: 2;
 }
 
 .integrations-label {
-  font-size: 11.5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   margin-bottom: 28px;
-}
-
-.integrations-track {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 36px;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.integrations-label::before,
+.integrations-label::after {
+  content: '';
+  height: 1px;
+  width: 48px;
+  background: var(--border-strong);
+  border-radius: 1px;
 }
 
 .integration-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 9px;
-  color: var(--text-muted);
-  font-size: 14.5px;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13.5px;
   font-weight: 500;
-  opacity: 0.6;
-  transition: opacity 0.22s;
+  padding: 8px 16px 8px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+  cursor: default;
+}
+.integration-item:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(10,10,15,0.07);
 }
 
-.integration-item:hover { opacity: 1; }
-
 .integration-icon {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
   border-radius: 6px;
 }
@@ -1926,6 +1989,437 @@ footer {
   transform: translateX(0);
 }
 
+/* ============ PRODUCT PREVIEW ============ */
+.preview-window {
+  --pw-bg:    #0a0a0f;
+  --pw-soft:  #11111a;
+  --pw-card:  #14141f;
+  --pw-border: rgba(255,255,255,0.07);
+  --pw-border2: rgba(255,255,255,0.12);
+  --pw-text:  #f0f0f4;
+  --pw-muted: #9ca3af;
+  --pw-dim:   #6b7280;
+  background: var(--pw-card);
+  border: 1px solid rgba(10,10,15,0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(10,10,15,0.22), 0 12px 28px rgba(10,10,15,0.10);
+  margin-top: 56px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.preview-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--pw-soft);
+  border-bottom: 1px solid var(--pw-border);
+}
+
+.preview-dots { display: flex; gap: 7px; }
+.preview-dot  { width: 11px; height: 11px; border-radius: 50%; background: var(--pw-border2); }
+
+.preview-url {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--pw-dim);
+}
+
+.preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #10b981;
+}
+
+.preview-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 420px;
+}
+
+@media (max-width: 680px) {
+  .preview-layout { grid-template-columns: 1fr; }
+}
+
+.preview-sidebar {
+  background: var(--pw-soft);
+  border-right: 1px solid var(--pw-border);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.preview-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: var(--pw-muted);
+  cursor: default;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.preview-sidebar-item.active {
+  color: var(--pw-text);
+  background: rgba(255,255,255,0.04);
+  border-left-color: #2b8ee8;
+}
+
+.preview-sidebar-item svg { opacity: 0.5; flex-shrink: 0; }
+.preview-sidebar-item.active svg { opacity: 1; }
+
+.preview-sidebar-badge {
+  margin-left: auto;
+  background: rgba(220,38,38,0.18);
+  color: #ef4444;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 1px 6px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+.preview-main {
+  padding: 24px 28px;
+  overflow: hidden;
+}
+
+.preview-main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.preview-main-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pw-text);
+}
+
+.preview-main-sub {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--pw-dim);
+  margin-top: 2px;
+}
+
+.preview-new-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #2b8ee8;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  cursor: default;
+}
+
+.preview-session-list { display: flex; flex-direction: column; gap: 10px; }
+
+.preview-session {
+  padding: 14px 18px;
+  background: var(--pw-soft);
+  border: 1px solid var(--pw-border);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  transition: border-color 0.2s;
+}
+
+.preview-session:hover { border-color: var(--pw-border2); }
+.preview-session.flagged { border-left: 3px solid #dc2626; }
+.preview-session.needs-review { border-left: 3px solid #f59e0b; }
+.preview-session.trusted { border-left: 3px solid #10b981; }
+
+.preview-session-name {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--pw-text);
+  margin-bottom: 2px;
+}
+
+.preview-session-role {
+  font-size: 11.5px;
+  color: var(--pw-muted);
+  margin-bottom: 8px;
+}
+
+.preview-session-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.07);
+  overflow: hidden;
+  max-width: 220px;
+}
+
+.preview-session-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s;
+}
+
+.preview-session-fill.red    { background: linear-gradient(90deg, #dc2626, #ef4444); }
+.preview-session-fill.amber  { background: linear-gradient(90deg, #d97706, #f59e0b); }
+.preview-session-fill.green  { background: linear-gradient(90deg, #059669, #10b981); }
+
+.preview-risk-badge {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--pw-dim);
+}
+
+.preview-risk-score {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.preview-risk-score.high   { color: #ef4444; }
+.preview-risk-score.medium { color: #f59e0b; }
+.preview-risk-score.low    { color: #10b981; }
+
+.preview-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-top: 6px;
+}
+
+.preview-status-chip.flagged     { background: rgba(220,38,38,0.12); color: #ef4444; }
+.preview-status-chip.needs-review { background: rgba(245,158,11,0.12); color: #f59e0b; }
+.preview-status-chip.trusted      { background: rgba(16,185,129,0.12); color: #10b981; }
+
+.preview-alerts-badge {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--pw-dim);
+  margin-top: 4px;
+}
+
+/* ============ INTEGRATIONS BAR ============ */
+.integrations-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.integrations-sublabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  padding: 5px 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+.integrations-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border-strong);
+  margin: 0 6px;
+  flex-shrink: 0;
+}
+
+/* ============ ATS INTEGRATIONS SECTION ============ */
+.ats-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 52px 0 48px;
+  flex-wrap: wrap;
+}
+
+.ats-flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  min-width: 148px;
+  text-align: center;
+  transition: all 0.25s;
+}
+
+.ats-flow-step:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.ats-flow-step--highlight {
+  border-color: rgba(13,151,173,0.35);
+  background: rgba(13,151,173,0.04);
+}
+
+.ats-flow-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(13,151,173,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.ats-flow-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.ats-flow-arrow {
+  font-size: 22px;
+  color: var(--border-strong);
+  font-weight: 300;
+  margin-top: -4px;
+}
+
+.ats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(188px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.ats-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.22s;
+}
+
+.ats-card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.ats-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.ats-card-info { flex: 1; min-width: 0; }
+
+.ats-card-name {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.ats-card-status {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  margin-top: 3px;
+}
+
+.ats-card-status.live { color: var(--success); }
+.ats-card-status.soon { color: var(--warning); }
+.ats-card-status.enterprise { color: var(--accent); }
+
+.ats-api-note {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.ats-api-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(43,142,232,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.ats-api-note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(43,142,232,0.3);
+}
+
+.ats-plan-note {
+  text-align: center;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  margin-top: 20px;
+}
+
+.ats-plan-note a { color: #0d97ad; text-decoration: underline; text-decoration-color: rgba(13,151,173,0.3); }
+
+@media (max-width: 680px) {
+  .ats-flow { gap: 8px; }
+  .ats-flow-step { min-width: 110px; padding: 18px 14px; }
+  .ats-flow-arrow { font-size: 16px; }
+  .ats-grid { grid-template-columns: 1fr 1fr; }
+  .ats-api-note { flex-direction: column; text-align: center; }
+}
+
 </style>
 </head>
 <body>
@@ -1941,9 +2435,13 @@ footer {
       <a href="#problem">Problem</a>
       <a href="#detection">Detection</a>
       <a href="#how">How it works</a>
+      <a href="#integrations">Integrations</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </div>
+    <a href="#book-demo" class="nav-cta" style="margin-right:8px;">
+      Book a demo
+    </a>
     <a href="coming-soon.html" class="nav-cta">
       Request early access
       <span class="arrow">→</span>
@@ -1957,11 +2455,13 @@ footer {
 <!-- Mobile nav drawer -->
 <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
   <div class="mobile-drawer-inner">
-    <a href="#problem"   class="mobile-link" onclick="closeDrawer()">Problem</a>
-    <a href="#detection" class="mobile-link" onclick="closeDrawer()">Detection</a>
-    <a href="#how"       class="mobile-link" onclick="closeDrawer()">How it works</a>
-    <a href="#pricing"   class="mobile-link" onclick="closeDrawer()">Pricing</a>
-    <a href="#faq"       class="mobile-link" onclick="closeDrawer()">FAQ</a>
+    <a href="#problem"      class="mobile-link" onclick="closeDrawer()">Problem</a>
+    <a href="#detection"   class="mobile-link" onclick="closeDrawer()">Detection</a>
+    <a href="#how"         class="mobile-link" onclick="closeDrawer()">How it works</a>
+    <a href="#integrations" class="mobile-link" onclick="closeDrawer()">Integrations</a>
+    <a href="#pricing"     class="mobile-link" onclick="closeDrawer()">Pricing</a>
+    <a href="#faq"         class="mobile-link" onclick="closeDrawer()">FAQ</a>
+    <a href="#book-demo"   class="mobile-link" onclick="closeDrawer()">Book a demo</a>
     <a href="coming-soon.html" class="mobile-cta">Request early access →</a>
   </div>
 </div>
@@ -1972,6 +2472,27 @@ footer {
   <canvas id="heroParticles" aria-hidden="true"></canvas>
   <div class="hero-grid" aria-hidden="true"><div class="grid-plane"></div></div>
 
+  <!-- Floating alert pills — visible on wide screens only -->
+  <div class="hero-floats" aria-hidden="true">
+    <div class="float-pill float-pill-1">
+      <span class="pill-dot red"></span>
+      AI tool detected — ChatGPT
+      <span class="pill-severity critical">Critical</span>
+    </div>
+    <div class="float-pill float-pill-2">
+      <span class="pill-dot amber"></span>
+      Bluetooth earpiece active
+      <span class="pill-severity high">High</span>
+    </div>
+    <div class="float-pill float-pill-3">
+      <span class="pill-dot blue"></span>
+      Tab switch × 3 detected
+      <span class="pill-severity medium">Medium</span>
+    </div>
+    <div class="float-pill float-pill-4">
+      <span class="pill-dot red"></span>
+      Risk score: <strong style="color:var(--danger);margin-left:3px;">84 / 100</strong>
+    </div>
   </div>
 
   <div class="hero-inner">
@@ -2022,7 +2543,7 @@ footer {
             <span class="alert-icon">✕</span>
             <div class="alert-body">
               <strong>AI tool detected</strong>
-              Cluely process running
+              ChatGPT process running
               <div class="alert-time">14:21:07</div>
             </div>
           </div>
@@ -2054,9 +2575,10 @@ footer {
 <!-- ============ INTEGRATIONS ============ -->
 <section class="integrations">
   <div class="integrations-label">Works seamlessly with your existing stack</div>
-  <div class="integrations-track">
+  <div class="integrations-group">
 
-    <!-- Zoom -->
+    <span class="integrations-sublabel">Video</span>
+
     <div class="integration-item">
       <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="26" height="26" rx="7" fill="#2D8CFF"/>
@@ -2066,7 +2588,6 @@ footer {
       Zoom
     </div>
 
-    <!-- Google Meet -->
     <div class="integration-item">
       <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="26" height="26" rx="7" fill="#ffffff" stroke="#e5e7eb"/>
@@ -2076,7 +2597,6 @@ footer {
       Google Meet
     </div>
 
-    <!-- Microsoft Teams -->
     <div class="integration-item">
       <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="26" height="26" rx="7" fill="#5059C9"/>
@@ -2088,7 +2608,9 @@ footer {
       Microsoft Teams
     </div>
 
-    <!-- Naukri -->
+    <div class="integrations-divider" aria-hidden="true"></div>
+    <span class="integrations-sublabel">ATS</span>
+
     <div class="integration-item">
       <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="26" height="26" rx="7" fill="#FF7555"/>
@@ -2097,7 +2619,6 @@ footer {
       Naukri
     </div>
 
-    <!-- Zoho Recruit -->
     <div class="integration-item">
       <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="26" height="26" rx="7" fill="#E42527"/>
@@ -2106,7 +2627,6 @@ footer {
       Zoho Recruit
     </div>
 
-    <!-- Greenhouse -->
     <div class="integration-item">
       <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="26" height="26" rx="7" fill="#24A47F"/>
@@ -2114,6 +2634,30 @@ footer {
         <rect x="11.5" y="13" width="3" height="6" rx="1.5" fill="white" opacity="0.9"/>
       </svg>
       Greenhouse
+    </div>
+
+    <div class="integration-item">
+      <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="26" height="26" rx="7" fill="#3E4EB8"/>
+        <text x="4" y="19" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="white">KK</text>
+      </svg>
+      Keka HR
+    </div>
+
+    <div class="integration-item">
+      <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="26" height="26" rx="7" fill="#0052CC"/>
+        <text x="4" y="19" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="white">DB</text>
+      </svg>
+      Darwinbox
+    </div>
+
+    <div class="integration-item">
+      <svg class="integration-icon" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="26" height="26" rx="7" fill="#1A73E8"/>
+        <text x="4" y="19" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="white">FT</text>
+      </svg>
+      Freshteam
     </div>
 
   </div>
@@ -2130,22 +2674,22 @@ footer {
 
     <div class="problem-grid">
       <div class="problem-card">
-        <div class="problem-stat">35%</div>
+        <div class="problem-stat" data-count="35" data-suffix="%">35%</div>
         <h3>Of candidates showed signs of cheating</h3>
         <p>In late 2025 — more than double the rate from six months earlier.</p>
       </div>
       <div class="problem-card">
-        <div class="problem-stat">6 in 10</div>
+        <div class="problem-stat" data-count="6" data-suffix=" in 10">6 in 10</div>
         <h3>Submitted fraudulent resumes landed jobs</h3>
         <p>According to a 2024 Resume.org study of hiring across industries.</p>
       </div>
       <div class="problem-card">
-        <div class="problem-stat">$50k+</div>
+        <div class="problem-stat" data-count="50" data-prefix="$" data-suffix="k+">$50k+</div>
         <h3>Cost of a single bad hire</h3>
         <p>In direct losses from recruitment, onboarding, and eventual severance.</p>
       </div>
       <div class="problem-card">
-        <div class="problem-stat">1 in 4</div>
+        <div class="problem-stat" data-count="1" data-suffix=" in 4">1 in 4</div>
         <h3>Candidate profiles will be fake by 2028</h3>
         <p>Driven by generative text, synthetic voice, and deepfake video — per Gartner.</p>
       </div>
@@ -2153,8 +2697,158 @@ footer {
   </div>
 </section>
 
+<!-- ============ PRODUCT PREVIEW ============ -->
+<section class="section-pad" id="preview" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label reveal">Dashboard preview</div>
+    <h2 class="section-title reveal">Real-time clarity for <em>every</em> interview.</h2>
+    <p class="section-sub reveal">
+      Your hiring team sees every active session on one dashboard — live risk scores, instant alerts, and full audit trails. No post-mortem guesswork.
+    </p>
+
+    <div class="preview-window reveal">
+      <!-- Browser chrome -->
+      <div class="preview-chrome">
+        <div class="preview-dots">
+          <span class="preview-dot"></span>
+          <span class="preview-dot"></span>
+          <span class="preview-dot"></span>
+        </div>
+        <div class="preview-url">lumera.quore-tex.com/dashboard</div>
+        <div class="preview-badge">
+          <span class="badge-dot"></span>
+          4 sessions active
+        </div>
+      </div>
+
+      <!-- App layout -->
+      <div class="preview-layout">
+
+        <!-- Sidebar -->
+        <div class="preview-sidebar">
+          <div class="preview-sidebar-item active">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+            <span class="preview-sidebar-badge">1</span>
+          </div>
+          <div class="preview-sidebar-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+            Sessions
+          </div>
+          <div class="preview-sidebar-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg>
+            Reports
+          </div>
+          <div class="preview-sidebar-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M8 7V5a2 2 0 0 0-4 0v2"/><path d="M8 12h8M8 16h5"/></svg>
+            Jobs
+          </div>
+          <div class="preview-sidebar-item" style="margin-top:auto;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+            HR Admin
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="preview-main">
+          <div class="preview-main-header">
+            <div>
+              <div class="preview-main-title" style="color:var(--pw-text);">Active Sessions</div>
+              <div class="preview-main-sub">Today, 14 May 2026 · 4 interviews in progress</div>
+            </div>
+            <div class="preview-new-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New session
+            </div>
+          </div>
+
+          <div class="preview-session-list">
+
+            <!-- Flagged session -->
+            <div class="preview-session flagged">
+              <div>
+                <div class="preview-session-name">Arjun Mehta</div>
+                <div class="preview-session-role">Senior Software Engineer · Round 2</div>
+                <div class="preview-session-bar">
+                  <div class="preview-session-fill red" style="width:84%"></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                  <span class="preview-status-chip flagged">⬤ Flagged</span>
+                  <span class="preview-alerts-badge">3 violations · ChatGPT, AirPods, Tab switches</span>
+                </div>
+              </div>
+              <div class="preview-risk-badge">
+                <div class="preview-risk-score high">84</div>
+                <div>/ 100</div>
+              </div>
+            </div>
+
+            <!-- Needs review -->
+            <div class="preview-session needs-review">
+              <div>
+                <div class="preview-session-name">Rohan Das</div>
+                <div class="preview-session-role">Data Scientist · Round 1</div>
+                <div class="preview-session-bar">
+                  <div class="preview-session-fill amber" style="width:52%"></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                  <span class="preview-status-chip needs-review">⬤ Needs Review</span>
+                  <span class="preview-alerts-badge">2 events · Tab switch, Gaze deviation</span>
+                </div>
+              </div>
+              <div class="preview-risk-badge">
+                <div class="preview-risk-score medium">52</div>
+                <div>/ 100</div>
+              </div>
+            </div>
+
+            <!-- Trusted -->
+            <div class="preview-session trusted">
+              <div>
+                <div class="preview-session-name">Priya Nair</div>
+                <div class="preview-session-role">Product Manager · Round 3</div>
+                <div class="preview-session-bar">
+                  <div class="preview-session-fill green" style="width:8%"></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                  <span class="preview-status-chip trusted">⬤ Trusted</span>
+                  <span class="preview-alerts-badge">No issues detected</span>
+                </div>
+              </div>
+              <div class="preview-risk-badge">
+                <div class="preview-risk-score low">8</div>
+                <div>/ 100</div>
+              </div>
+            </div>
+
+            <!-- Trusted -->
+            <div class="preview-session trusted">
+              <div>
+                <div class="preview-session-name">Kavya Singh</div>
+                <div class="preview-session-role">Frontend Engineer · Round 1</div>
+                <div class="preview-session-bar">
+                  <div class="preview-session-fill green" style="width:12%"></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                  <span class="preview-status-chip trusted">⬤ Trusted</span>
+                  <span class="preview-alerts-badge">No issues detected</span>
+                </div>
+              </div>
+              <div class="preview-risk-badge">
+                <div class="preview-risk-score low">12</div>
+                <div>/ 100</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ DETECTION ============ -->
-<section class="section-pad" id="detection" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<section class="section-pad" id="detection" style="background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="section-label">What we detect</div>
     <h2 class="section-title">Six layers of <em>defense</em>. Zero cheaters slip through.</h2>
@@ -2176,11 +2870,16 @@ footer {
           </svg>
         </div>
         <h3>AI tools running</h3>
-        <p>Detects Cluely, Interview Coder, ChatGPT desktop, Parakeet AI, and other stealth overlay tools candidates use to feed AI answers.</p>
+        <p>Detects ChatGPT, DeepSeek, Cursor, Perplexity, Copilot, Grok, Blackbox, Parakeet AI, and other AI tools candidates run during interviews to generate answers.</p>
         <div class="detection-tags">
-          <span class="tag">Cluely</span>
-          <span class="tag">Interview Coder</span>
-          <span class="tag">LeetCode Wizard</span>
+          <span class="tag">ChatGPT</span>
+          <span class="tag">DeepSeek</span>
+          <span class="tag">Cursor</span>
+          <span class="tag">Perplexity</span>
+          <span class="tag">Copilot</span>
+          <span class="tag">Grok</span>
+          <span class="tag">Blackbox</span>
+          <span class="tag">Parakeet AI</span>
         </div>
       </div>
 
@@ -2196,11 +2895,15 @@ footer {
           </svg>
         </div>
         <h3>Remote desktop takeover</h3>
-        <p>Catches AnyDesk, TeamViewer, RDP, Chrome Remote Desktop — when someone else is controlling the candidate's machine from another location.</p>
+        <p>Catches AnyDesk, TeamViewer, RustDesk, Parsec, VNC variants, Splashtop, ScreenConnect, and more — when someone else is controlling the candidate's machine from another location.</p>
         <div class="detection-tags">
           <span class="tag">AnyDesk</span>
           <span class="tag">TeamViewer</span>
-          <span class="tag">RDP</span>
+          <span class="tag">RustDesk</span>
+          <span class="tag">Parsec</span>
+          <span class="tag">VNC</span>
+          <span class="tag">Splashtop</span>
+          <span class="tag">ScreenConnect</span>
         </div>
       </div>
 
@@ -2301,22 +3004,11 @@ footer {
       <div class="flow-step">
         <div class="flow-num">01</div>
         <div class="flow-content">
-          <div class="flow-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="5" width="18" height="13" rx="2"/>
-              <circle cx="12" cy="10" r="2.5"/>
-              <path d="M7.5 18c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/>
-            </svg>
-          </div>
           <h3>Candidate joins interview</h3>
-          <p>
-            The candidate receives an interview link as usual. Before joining, they install a lightweight 12 MB Lumera agent — no admin rights required. The agent auto-launches with the interview.
-          </p>
+          <p>They install a 12 MB Lumera agent — no admin rights required. It auto-launches with the interview link.</p>
           <div class="flow-meta">
-            <span>Zoom</span>
-            <span>Google Meet</span>
-            <span>Microsoft Teams</span>
-            <span>Custom platforms</span>
+            <span>Zoom, Meet, Teams</span>
+            <span>No admin rights needed</span>
           </div>
         </div>
       </div>
@@ -2324,23 +3016,11 @@ footer {
       <div class="flow-step">
         <div class="flow-num">02</div>
         <div class="flow-content">
-          <div class="flow-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/>
-              <circle cx="12" cy="12" r="4.5"/>
-              <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
-              <path d="M12 3v2M12 19v2M3 12H1M23 12h-2" stroke-width="1.3" opacity="0.5"/>
-            </svg>
-          </div>
           <h3>Lumera monitors silently</h3>
-          <p>
-            The agent runs six detection layers in parallel — scanning processes, network traffic, Bluetooth devices, behavior patterns, and display configuration. All processing is real-time and privacy-first.
-          </p>
+          <p>Six detection layers run in parallel — processes, network, Bluetooth, behaviour, display, and video.</p>
           <div class="flow-meta">
-            <span>Process scanning</span>
-            <span>Network fingerprinting</span>
-            <span>WebRTC video analysis</span>
-            <span>Behavioral ML</span>
+            <span>Real-time processing</span>
+            <span>Privacy-first design</span>
           </div>
         </div>
       </div>
@@ -2348,19 +3028,9 @@ footer {
       <div class="flow-step">
         <div class="flow-num">03</div>
         <div class="flow-content">
-          <div class="flow-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-              <circle cx="18" cy="5" r="3.5" fill="#dc2626" stroke="none"/>
-            </svg>
-          </div>
-          <h3>Interviewer sees live alerts</h3>
-          <p>
-            Suspicious activity surfaces instantly on the interviewer's dashboard — with severity ratings, timestamps, and evidence. No need to play detective. Focus on the interview, let Lumera handle the integrity.
-          </p>
+          <h3>Live alerts appear instantly</h3>
+          <p>Suspicious signals surface on the interviewer's dashboard with severity, timestamps, and evidence.</p>
           <div class="flow-meta">
-            <span>Real-time alerts</span>
             <span>Risk score 0–100</span>
             <span>Evidence timeline</span>
           </div>
@@ -2370,21 +3040,11 @@ footer {
       <div class="flow-step">
         <div class="flow-num">04</div>
         <div class="flow-content">
-          <div class="flow-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <path d="M9 13l2 2 4-4"/>
-            </svg>
-          </div>
-          <h3>Get a complete fraud report</h3>
-          <p>
-            After the interview, receive a comprehensive PDF report with every detected event, timestamps, confidence scores, and recommendations — ready for HR records and hiring decisions.
-          </p>
+          <h3>Full fraud report delivered</h3>
+          <p>A PDF report with every detected event, confidence scores, and recommendations — ready for HR records.</p>
           <div class="flow-meta">
             <span>PDF export</span>
-            <span>ATS integration</span>
-            <span>Audit trail</span>
+            <span>ATS-ready audit trail</span>
           </div>
         </div>
       </div>
@@ -2392,8 +3052,171 @@ footer {
   </div>
 </section>
 
+<!-- ============ ATS INTEGRATIONS ============ -->
+<section class="section-pad" id="integrations" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">ATS Integrations</div>
+    <h2 class="section-title">Fraud reports land in your <em>ATS</em> automatically.</h2>
+    <p class="section-sub">
+      The moment an interview ends, Lumera pushes a structured fraud report directly into the candidate's ATS profile — risk score, flagged events, timestamps, and evidence. No copy-pasting, no manual uploads.
+    </p>
+
+    <!-- Flow diagram -->
+    <div class="ats-flow">
+      <div class="ats-flow-step">
+        <div class="ats-flow-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="13" rx="2"/>
+            <circle cx="12" cy="10" r="2.5"/>
+            <path d="M7.5 18c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/>
+          </svg>
+        </div>
+        <div class="ats-flow-label">Interview ends</div>
+      </div>
+      <div class="ats-flow-arrow">→</div>
+      <div class="ats-flow-step">
+        <div class="ats-flow-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="ats-flow-label">Lumera scores &amp; signs report</div>
+      </div>
+      <div class="ats-flow-arrow">→</div>
+      <div class="ats-flow-step">
+        <div class="ats-flow-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <path d="M9 13l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="ats-flow-label">PDF report generated</div>
+      </div>
+      <div class="ats-flow-arrow">→</div>
+      <div class="ats-flow-step ats-flow-step--highlight">
+        <div class="ats-flow-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+            <path d="M7 10l3 3 5-5" stroke-width="1.8"/>
+          </svg>
+        </div>
+        <div class="ats-flow-label">Pushed to ATS candidate profile</div>
+      </div>
+    </div>
+
+    <!-- ATS platform grid -->
+    <div class="ats-grid">
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#FF7555;">N</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Naukri RMS</div>
+          <div class="ats-card-status soon">◐ Coming soon</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#E42527;">ZR</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Zoho Recruit</div>
+          <div class="ats-card-status soon">◐ Coming soon</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#24A47F;">GH</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Greenhouse</div>
+          <div class="ats-card-status soon">◐ Coming soon</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#3E4EB8;">KK</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Keka HR</div>
+          <div class="ats-card-status soon">◐ Coming Q3 2026</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#0052CC;">DB</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Darwinbox</div>
+          <div class="ats-card-status soon">◐ Coming Q3 2026</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#1A73E8;">FT</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Freshteam</div>
+          <div class="ats-card-status soon">◐ Coming Q3 2026</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#4CAF50;">LV</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Lever</div>
+          <div class="ats-card-status enterprise">◆ Enterprise plan</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#0073B1;">WD</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Workday</div>
+          <div class="ats-card-status enterprise">◆ Enterprise plan</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:#7C3AED;">iC</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">iCIMS</div>
+          <div class="ats-card-status enterprise">◆ Enterprise plan</div>
+        </div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-card-icon" style="background:linear-gradient(135deg, #1a6fc9, #059669);">API</div>
+        <div class="ats-card-info">
+          <div class="ats-card-name">Custom / Webhook</div>
+          <div class="ats-card-status live">● All plans</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- API note -->
+    <div class="ats-api-note">
+      <div class="ats-api-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 10h-1.3A7 7 0 1 0 8 17v-1"/>
+          <circle cx="5" cy="19" r="2"/>
+          <circle cx="12" cy="21" r="2"/>
+          <circle cx="19" cy="19" r="2"/>
+          <path d="M7 17.8l3.5-2M15 19.8l2.5-2.2"/>
+        </svg>
+      </div>
+      <div>
+        Using an in-house HRMS or a platform not listed? Lumera's <a href="coming-soon.html">webhook API</a> pushes structured JSON fraud reports to any endpoint on all plans. Full API docs available to beta customers.
+      </div>
+    </div>
+
+    <p class="ats-plan-note">
+      Native ATS integrations are available on <a href="#pricing">Growth and above</a>. Webhook API on all plans. <a href="coming-soon.html">Contact us</a> for custom enterprise integrations.
+    </p>
+  </div>
+</section>
+
 <!-- ============ WHY LUMERA ============ -->
-<section class="section-pad" id="why" style="background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<section class="section-pad" id="why" style="background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="section-label">Why Lumera</div>
     <h2 class="section-title">Built for <em>India first</em>. Priced for real teams.</h2>
@@ -2407,8 +3230,8 @@ footer {
         <p>All data stored in Mumbai AWS region. Full DPDP Act compliance. Enterprise BFSI and government-adjacent customers love this.</p>
       </div>
       <div class="why-card">
-        <h3><span class="why-check">✓</span> Indic language support</h3>
-        <p>Hindi, Marathi, Tamil, Telugu, Bengali — behavioral detection works across India's real hiring languages.</p>
+        <h3><span class="why-check">✓</span> Language-agnostic detection</h3>
+        <p>Behavioral signals — tab switches, process names, face presence, voice activity — work regardless of what language the interview is conducted in.</p>
       </div>
       <div class="why-card">
         <h3><span class="why-check">✓</span> Pay per interview</h3>
@@ -2416,7 +3239,7 @@ footer {
       </div>
       <div class="why-card">
         <h3><span class="why-check">✓</span> Works with your tools</h3>
-        <p>Native Zoom, Google Meet, and Microsoft Teams support. Plus Naukri, Zoho Recruit, and Greenhouse ATS integrations.</p>
+        <p>Native Zoom, Google Meet, and Microsoft Teams support. ATS integrations with Naukri, Zoho Recruit, and Greenhouse are on the roadmap.</p>
       </div>
       <div class="why-card">
         <h3><span class="why-check">✓</span> Candidate transparency</h3>
@@ -2477,10 +3300,10 @@ footer {
         <div class="compare-cell partial">◐ Limited</div>
       </div>
       <div class="compare-row">
-        <div class="compare-feature">Indic language support</div>
-        <div class="compare-cell yes lumera-col">✓ 5 languages</div>
-        <div class="compare-cell no">English only</div>
-        <div class="compare-cell partial">◐ Hindi only</div>
+        <div class="compare-feature">Language-agnostic detection</div>
+        <div class="compare-cell yes lumera-col">✓ Any language</div>
+        <div class="compare-cell partial">◐ English-tuned</div>
+        <div class="compare-cell partial">◐ English-tuned</div>
       </div>
       <div class="compare-row">
         <div class="compare-feature">Starting price (per month)</div>
@@ -2506,7 +3329,7 @@ footer {
 
       <div class="testimonial-card">
         <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-quote">We caught three candidates using Cluely in a single week. The alert came within 4 seconds of detection. Our hiring panel was shocked — we had no idea how widespread this had become.</p>
+        <p class="testimonial-quote">We caught three candidates running ChatGPT desktop in a single week. The alert came within seconds of detection. Our hiring panel was shocked — we had no idea how widespread this had become.</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar av-teal">PS</div>
           <div>
@@ -2566,7 +3389,7 @@ footer {
         <div class="pricing-interviews">Up to 10 interviews / month</div>
         <hr class="pricing-divider" />
         <ul class="pricing-features">
-          <li>AI tool &amp; Cluely detection</li>
+          <li>AI tool detection (ChatGPT, DeepSeek, Cursor…)</li>
           <li>Remote desktop detection</li>
           <li>Basic behavioural analysis</li>
           <li>Email reports after each interview</li>
@@ -2674,7 +3497,7 @@ footer {
           <div class="faq-toggle">+</div>
         </div>
         <div class="faq-a">
-          Yes. Lumera supports Windows 10/11, macOS 12+, and Ubuntu 22.04+. The same detection capabilities work across all three platforms.
+          Lumera is fully supported on Windows 10/11. macOS 12+ is supported with most detection capabilities. Linux is not currently supported — Windows provides the most complete coverage.
         </div>
       </div>
 
@@ -2684,7 +3507,7 @@ footer {
           <div class="faq-toggle">+</div>
         </div>
         <div class="faq-a">
-          Our current detection accuracy is 97%+ across all fraud vectors, with a false positive rate under 2%. We continuously retrain our models on adversarially generated data to stay ahead of new cheating tactics.
+          Lumera uses a multi-signal approach — no single signal triggers a flag on its own. Risk scores are probabilistic and designed to assist human review, not replace it. All flags should be reviewed by your hiring team before acting on them.
         </div>
       </div>
 
@@ -2724,10 +3547,23 @@ footer {
         Request early access
         <span class="arrow">→</span>
       </a>
-      <a href="coming-soon.html" class="btn btn-secondary">
+      <a href="#book-demo" class="btn btn-secondary">
         Book a demo
       </a>
     </div>
+  </div>
+</section>
+
+<!-- ============ BOOK A DEMO ============ -->
+<section class="section-pad" id="book-demo">
+  <div class="container">
+    <div class="section-label reveal">Book a demo</div>
+    <h2 class="section-title reveal">See Lumera catch fraud <em>live</em>.</h2>
+    <p class="section-sub reveal">
+      30 minutes. We'll walk you through the HR dashboard, live detection, and ATS report push — using a real interview simulation. No slides, no sales pitch.
+    </p>
+
+    <div style="width:100%; min-height:700px; overflow:scroll; border:1px solid var(--border); border-radius:16px; background:var(--bg-card); margin-top: 48px;" id="my-cal-inline-lumera-demo"></div>
   </div>
 </section>
 
@@ -2745,21 +3581,22 @@ footer {
       <a href="#problem">Problem</a>
       <a href="#detection">Detection</a>
       <a href="#how">How it works</a>
+      <a href="#integrations">Integrations</a>
       <a href="#why">Why Lumera</a>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
-      <a href="https://quore-tex.com" target="_blank">Quoretex</a>
-      <a href="#">About</a>
-      <a href="#">Careers</a>
+      <a href="https://quore-tex.com" target="_blank" rel="noopener">Quoretex</a>
+      <a href="mailto:lumera@quore-tex.com?subject=About Lumera">About us</a>
+      <a href="mailto:lumera@quore-tex.com?subject=Careers at Quoretex">Careers</a>
       <a href="mailto:lumera@quore-tex.com">Contact</a>
     </div>
     <div class="footer-col">
       <h4>Legal</h4>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">DPDP compliance</a>
-      <a href="#">Security</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="dpdp.html">DPDP compliance</a>
+      <a href="mailto:lumera@quore-tex.com?subject=Security inquiry">Security</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -2797,6 +3634,8 @@ footer {
     '.detection-card',
     '.why-card',
     '.flow-step',
+    '.ats-flow-step',
+    '.ats-card',
     '.testimonial-card',
     '.pricing-card',
     '.compare-row:not(.compare-head)',
@@ -2810,6 +3649,11 @@ footer {
     );
     el.style.setProperty('--reveal-i', siblings.indexOf(el));
     el.classList.add('reveal');
+    io.observe(el);
+  });
+
+  // Standalone reveal elements (preview window, hero demo, etc.)
+  document.querySelectorAll('.preview-window').forEach(el => {
     io.observe(el);
   });
 
@@ -3122,7 +3966,7 @@ footer {
 // ============================================================
 // 3D CARD TILT
 // ============================================================
-document.querySelectorAll('.detection-card, .problem-card, .why-card').forEach(card => {
+document.querySelectorAll('.detection-card, .problem-card, .why-card, .ats-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width  - 0.5;
@@ -3166,6 +4010,50 @@ function closeDrawer() {
 burger.addEventListener('click', () => {
   burger.classList.contains('open') ? closeDrawer() : openDrawer();
 });
+
+// ============================================================
+// STAT COUNT-UP ANIMATION
+// ============================================================
+(function () {
+  const stats = document.querySelectorAll('.problem-stat[data-count]');
+  if (!stats.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.dataset.count, 10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1200;
+      const start = performance.now();
+      function step(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(ease * target);
+        el.textContent = prefix + value + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  stats.forEach(el => io.observe(el));
+})();
+</script>
+
+<!-- Cal.com inline embed -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "lumera-demo", {origin:"https://app.cal.com"});
+
+  Cal.ns["lumera-demo"]("inline", {
+    elementOrSelector:"#my-cal-inline-lumera-demo",
+    config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"},
+    calLink: "dhiraj-pandit-fwujic/lumera-demo",
+  });
+
+  Cal.ns["lumera-demo"]("ui", {"theme":"light","cssVarsPerTheme":{"light":{"cal-brand":"#0d97ad"},"dark":{"cal-brand":"#0d97ad"}},"hideEventTypeDetails":false,"layout":"month_view"});
 </script>
 
 </body>
