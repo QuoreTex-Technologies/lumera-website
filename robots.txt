@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block admin / dashboard paths if they exist
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://lumera.quore-tex.com/sitemap.xml
